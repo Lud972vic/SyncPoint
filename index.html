@@ -492,6 +492,15 @@ body[data-billing="saas"] .sp-price-saas{display:block}
 .sp-form-success p{font-size:.88rem;color:var(--text-secondary);margin:0;line-height:1.55}
 .sp-modal-secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.76rem;color:var(--text-tertiary);margin-top:16px}
 .sp-modal-secure i{color:#198754}
+
+/* AVERTISSEMENT — phase pré-lancement */
+.sp-modal-notice{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:var(--r-md);margin-bottom:20px;font-size:.84rem;line-height:1.5;color:#92400e}
+.sp-modal-notice i{color:#f59e0b;font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.sp-modal-notice strong{font-weight:700}
+
+/* FORMULAIRE DÉSACTIVÉ — bientôt en production */
+.sp-modal form{opacity:.5;pointer-events:none;filter:grayscale(.6)}
+.sp-modal form .sp-form-submit{cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -1104,6 +1113,11 @@ body[data-billing="saas"] .sp-price-saas{display:block}
       <p class="sp-modal-subtitle" id="spModalSubtitle">Remplissez vos informations, puis effectuez votre paiement via Wero.</p>
     </div>
     <div class="sp-modal-body">
+      <!-- Avertissement — phase pré-lancement -->
+      <div class="sp-modal-notice">
+        <i class="bi bi-info-circle"></i>
+        <span>Ce formulaire est <strong>fictif</strong>. Aucune commande ne sera honorée avant le lancement officiel du produit. Merci de votre patience.</span>
+      </div>
       <!-- Formulaire -->
       <form id="spModalForm" autocomplete="on">
         <div class="sp-form-row">
@@ -1338,15 +1352,11 @@ body[data-billing="saas"] .sp-price-saas{display:block}
       if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
     });
 
-    /* Submit — simule l'envoi */
+    /* Submit — bloqué (bientôt en production) */
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var firstName = document.getElementById('spFirstName').value || '';
-      var planName = document.getElementById('spSummaryPlan').textContent;
-      document.getElementById('spSuccessName').textContent = firstName;
-      document.getElementById('spSuccessPlan').textContent = planName;
-      form.style.display = 'none';
-      success.classList.add('show');
+      e.stopPropagation();
+      return false;
     });
   }
 
