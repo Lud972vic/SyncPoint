@@ -13,7 +13,6 @@ Plateforme de gestion de fichiers et de collaboration : stockez, organisez, part
 
 ![Dashboard](captures/02-dashboard.png)
 ![Explorateur de fichiers](captures/03-browse.png)
-![Édition OnlyOffice](captures/18-onlyoffice-xlsx.png)
 
 ## Fonctionnalités présentées
 
@@ -41,24 +40,6 @@ Plateforme de gestion de fichiers et de collaboration : stockez, organisez, part
 | **Enterprise** | 8 000 €/projet | On-premise, souveraineté totale |
 
 Aucune licence par utilisateur. Jamais.
-
-## Structure du dépôt
-
-```
-.
-├── index.html      # Landing page complète (HTML + CSS + JS)
-└── captures/       # Captures d'écran réelles de l'application
-    ├── 01-login.png
-    ├── 02-dashboard.png
-    ├── 03-browse.png
-    └── ... (20 captures au total)
-```
-
-## Déploiement (GitHub Pages)
-
-1. Le dépôt est servi via **GitHub Pages** sur la branche `main`
-2. URL : https://lud972vic.github.io/SyncPoint/
-3. Les images sont chargées depuis `/SyncPoint/captures/`
 
 ## Liens
 
