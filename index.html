@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncPoint — Vos fichiers, partout avec vous.</title>
+<meta name="description" content="SyncPoint : plateforme de gestion de fichiers et de collaboration. Stockez, organisez, partagez et sécurisez vos documents d'entreprise depuis un seul endroit. Hébergement managé, on-premise, API REST.">
+
+<!-- Nunito Sans — police du design system SyncPoint -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..800;1,6..12,300..800&display=swap" rel="stylesheet">
+
+<!-- Bootstrap Icons (utilisé dans toute l'app) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+:root{
+  --ald-blue:#202b78;--ald-cyan:#00b6ed;--ald-red:#c51718;
+  --blue-50:#f0f2fb;--blue-100:#dde0f4;--blue-200:#bec4e8;--blue-300:#8e99d1;
+  --blue-400:#5a68b8;--blue-500:#202b78;--blue-600:#1b246a;--blue-700:#161d58;
+  --blue-800:#101644;--blue-900:#0b0f30;--blue-950:#07091e;
+  --cyan-50:#edfaff;--cyan-100:#d5f3fd;--cyan-200:#a9e8fb;--cyan-300:#6bd9f7;
+  --cyan-400:#2ac6f2;--cyan-500:#00b6ed;--cyan-600:#0097c8;--cyan-700:#007ba5;
+  --red-50:#fff0f0;--red-100:#ffdede;--red-400:#f04545;--red-500:#c51718;--red-600:#a81315;
+  --neutral-0:#fff;--neutral-50:#f8f9fb;--neutral-100:#f1f2f6;--neutral-200:#e4e6ee;
+  --neutral-300:#cdd0df;--neutral-400:#a8adbf;--neutral-500:#7b8099;--neutral-600:#565b73;
+  --neutral-700:#393d52;--neutral-800:#22253a;--neutral-900:#12152a;
+  --text-primary:#0f1229;--text-secondary:#4a4f6a;--text-tertiary:#7b8099;
+  --color-success:#0e9a6b;--color-warning:#c07d10;
+  --grad-blue:linear-gradient(135deg,#2d3d9f 0%,#202b78 60%,#161d58 100%);
+  --grad-hero:linear-gradient(160deg,#101644 0%,#07091e 40%,#040514 100%);
+  --grad-cyan:linear-gradient(135deg,#22c8f5 0%,#00b6ed 100%);
+  --grad-card-blue:linear-gradient(135deg,#202b78 0%,#161d58 100%);
+  --grad-card-cyan:linear-gradient(135deg,#2ac6f2 0%,#0097c8 100%);
+  --grad-card-red:linear-gradient(135deg,#f04545 0%,#a81315 100%);
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:18px;--r-2xl:24px;--r-full:9999px;
+  --shadow-xs:0 1px 2px rgba(8,10,22,.04);
+  --shadow-sm:0 1px 3px rgba(8,10,22,.05),0 1px 2px rgba(8,10,22,.04);
+  --shadow-md:0 4px 10px -2px rgba(8,10,22,.06),0 2px 4px -1px rgba(8,10,22,.05);
+  --shadow-lg:0 10px 28px -6px rgba(8,10,22,.08),0 4px 10px -3px rgba(8,10,22,.05);
+  --shadow-xl:0 20px 48px -12px rgba(8,10,22,.12),0 8px 18px -6px rgba(8,10,22,.06);
+  --shadow-2xl:0 36px 64px -16px rgba(8,10,22,.16),0 12px 28px -8px rgba(8,10,22,.08);
+  --shadow-blue:0 6px 24px -6px rgba(32,43,120,.28),0 2px 6px -2px rgba(32,43,120,.18);
+  --shadow-cyan:0 6px 24px -6px rgba(0,182,237,.28);
+  --ease-out:cubic-bezier(.22,1,.36,1);--t-fast:.12s;--t-base:.22s;--t-slow:.38s;
+}
+*,*::before,*::after{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{scroll-behavior:smooth;font-size:16px}
+body{margin:0;font-family:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-feature-settings:'kern','liga';background:#f4f5f9;color:var(--text-primary);letter-spacing:.01em;overflow-x:hidden}
+::selection{background:rgba(0,182,237,.18);color:var(--blue-800)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(32,43,120,.15);border-radius:var(--r-full)}
+::-webkit-scrollbar-thumb:hover{background:rgba(32,43,120,.28)}
+a{color:inherit}
+img{max-width:100%;display:block}
+
+/* HEADER */
+.sp-header{position:fixed;top:40px;left:0;right:0;height:68px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(32,43,120,.07);z-index:1030;transition:box-shadow var(--t-base) var(--ease-out)}
+.sp-header.scrolled{box-shadow:0 1px 0 rgba(32,43,120,.08),0 8px 24px -12px rgba(8,10,22,.12)}
+.sp-header-inner{max-width:1200px;margin:0 auto;padding:0 28px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.sp-brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text-primary);font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.sp-brand:hover{color:var(--blue-500)}
+.sp-brand-mark{width:40px;height:40px;border-radius:var(--r-lg);background:var(--grad-blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.25rem;box-shadow:var(--shadow-blue);flex-shrink:0}
+.sp-nav{display:flex;align-items:center;gap:4px}
+.sp-nav-link{text-decoration:none;color:var(--text-secondary);font-size:.875rem;font-weight:500;padding:8px 14px;border-radius:var(--r-md);transition:color var(--t-fast),background var(--t-fast)}
+.sp-nav-link:hover{color:var(--text-primary);background:rgba(32,43,120,.05)}
+.sp-actions{display:flex;align-items:center;gap:10px}
+.sp-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;font-size:.875rem;line-height:1;padding:11px 18px;border-radius:var(--r-md);border:1px solid transparent;cursor:pointer;text-decoration:none;transition:all var(--t-base) var(--ease-out);white-space:nowrap}
+.sp-btn i{font-size:1rem}
+.sp-btn-ghost{color:var(--text-secondary);background:transparent}
+.sp-btn-ghost:hover{color:var(--text-primary);background:rgba(32,43,120,.05)}
+.sp-btn-outline{color:var(--blue-500);border-color:rgba(32,43,120,.18);background:#fff}
+.sp-btn-outline:hover{border-color:var(--blue-500);background:rgba(32,43,120,.04);transform:translateY(-1px)}
+.sp-btn-primary{color:#fff;background:var(--grad-blue);box-shadow:var(--shadow-blue)}
+.sp-btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 28px -6px rgba(32,43,120,.4);color:#fff}
+.sp-btn-lg{padding:14px 24px;font-size:.95rem;border-radius:var(--r-lg)}
+
+/* HERO */
+.sp-hero{position:relative;padding:188px 28px 96px;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% -10%,rgba(0,182,237,.10) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 85% 20%,rgba(32,43,120,.10) 0%,transparent 55%),linear-gradient(180deg,#fff 0%,#f7f8fc 100%)}
+.sp-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(32,43,120,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(32,43,120,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 0%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 0%,transparent 75%);pointer-events:none}
+.sp-hero-inner{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.sp-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;background:rgba(255,255,255,.8);border:1px solid rgba(32,43,120,.1);border-radius:var(--r-full);font-size:.8rem;font-weight:500;color:var(--text-secondary);margin-bottom:28px;box-shadow:var(--shadow-xs)}
+.sp-eyebrow-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;background:var(--grad-blue);color:#fff;border-radius:var(--r-full);font-size:.72rem;font-weight:600;letter-spacing:.01em}
+.sp-hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin:0 0 24px}
+.sp-hl{background:linear-gradient(120deg,var(--blue-500) 0%,var(--cyan-500) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sp-hero-lead{font-size:1.125rem;line-height:1.65;color:var(--text-secondary);max-width:560px;margin:0 0 36px}
+.sp-hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:32px}
+.sp-hero-meta{display:flex;flex-wrap:wrap;gap:22px;font-size:.82rem;color:var(--text-tertiary)}
+.sp-hero-meta-item{display:inline-flex;align-items:center;gap:7px}
+.sp-hero-meta-item i{color:var(--color-success);font-size:1rem}
+
+/* Hero visual — reflète l'app réelle */
+.sp-hero-visual{position:relative;height:460px}
+.sp-card{position:absolute;background:#fff;border:1px solid rgba(32,43,120,.08);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);overflow:hidden}
+.sp-card-main{top:0;left:0;right:30px;height:320px;z-index:3;animation:sp-float 7s ease-in-out infinite}
+.sp-card-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid rgba(32,43,120,.06);background:linear-gradient(180deg,#fafbff 0%,#fff 100%)}
+.sp-card-dots{display:flex;gap:6px}
+.sp-card-dots span{width:10px;height:10px;border-radius:50%;background:rgba(32,43,120,.14)}
+.sp-card-dots span:nth-child(1){background:#ff5f57}
+.sp-card-dots span:nth-child(2){background:#febc2e}
+.sp-card-dots span:nth-child(3){background:#28c840}
+.sp-card-title{font-size:.8rem;font-weight:600;color:var(--text-secondary);margin-left:6px}
+.sp-card-body{padding:16px 18px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.sp-tile{border-radius:var(--r-md);padding:14px;background:var(--neutral-50);border:1px solid rgba(32,43,120,.05);display:flex;flex-direction:column;gap:8px}
+.sp-tile-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem}
+.sp-tile-icon.blue{background:var(--grad-card-blue)}
+.sp-tile-icon.cyan{background:var(--grad-card-cyan)}
+.sp-tile-icon.red{background:var(--grad-card-red)}
+.sp-tile-icon.green{background:linear-gradient(135deg,#16a34a 0%,#0e9a6b 100%)}
+.sp-tile-label{font-size:.78rem;font-weight:600;color:var(--text-primary)}
+.sp-tile-sub{font-size:.7rem;color:var(--text-tertiary)}
+
+/* Mini carte recherche (fonctionnalité réelle) */
+.sp-card-search{bottom:40px;left:-20px;width:260px;z-index:4;padding:14px 16px;animation:sp-float 6s ease-in-out .6s infinite}
+.sp-card-search-row{display:flex;align-items:center;gap:10px}
+.sp-card-search-icon{width:30px;height:30px;border-radius:8px;background:var(--grad-cyan);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem}
+.sp-card-search-input{flex:1;height:8px;border-radius:var(--r-full);background:var(--neutral-100);position:relative;overflow:hidden}
+.sp-card-search-input::after{content:'';position:absolute;top:0;left:0;bottom:0;width:60%;background:var(--grad-blue);border-radius:var(--r-full);animation:sp-search 3.4s ease-in-out infinite}
+.sp-card-search-label{font-size:.68rem;color:var(--text-tertiary);margin-top:8px}
+
+/* Mini carte permissions NTFS (fonctionnalité réelle) */
+.sp-card-perms{bottom:0;right:0;width:220px;z-index:4;padding:14px 16px;animation:sp-float 7.5s ease-in-out 1.2s infinite}
+.sp-card-perms-title{font-size:.74rem;font-weight:600;color:var(--text-primary);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sp-card-perms-title i{color:var(--cyan-500);font-size:.85rem}
+.sp-card-perms-row{display:flex;align-items:center;gap:8px;font-size:.68rem;color:var(--text-secondary);padding:3px 0}
+.sp-card-perms-check{width:14px;height:14px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.6rem;color:#fff}
+.sp-card-perms-check.on{background:var(--color-success)}
+.sp-card-perms-check.off{background:var(--neutral-300)}
+
+@keyframes sp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes sp-search{0%{width:20%}50%{width:85%}100%{width:20%}}
+
+/* SECTIONS */
+.sp-section{padding:96px 28px}
+.sp-section-alt{background:var(--neutral-50)}
+.sp-container{max-width:1200px;margin:0 auto}
+.sp-section-head{text-align:center;max-width:680px;margin:0 auto 64px}
+.sp-section-eyebrow{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;background:rgba(32,43,120,.06);color:var(--blue-500);border-radius:var(--r-full);font-size:.78rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;margin-bottom:18px}
+.sp-section-eyebrow i{font-size:.85rem}
+.sp-section-title{font-size:clamp(1.9rem,3.5vw,2.6rem);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin:0 0 18px}
+.sp-section-subtitle{font-size:1.0625rem;line-height:1.6;color:var(--text-secondary);margin:0}
+
+/* WHY */
+.sp-why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sp-why-item{display:flex;align-items:flex-start;gap:12px;padding:20px;background:#fff;border:1px solid rgba(32,43,120,.07);border-radius:var(--r-lg);transition:all var(--t-base) var(--ease-out)}
+.sp-why-item:hover{border-color:rgba(32,43,120,.16);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.sp-why-icon{width:36px;height:36px;border-radius:10px;background:rgba(32,43,120,.07);color:var(--blue-500);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.sp-why-text{font-size:.875rem;font-weight:600;color:var(--text-primary);line-height:1.4;padding-top:7px}
+
+/* COMPARE */
+.sp-compare{max-width:920px;margin:0 auto;background:#fff;border:1px solid rgba(32,43,120,.08);border-radius:var(--r-2xl);box-shadow:var(--shadow-lg);overflow:hidden}
+.sp-compare-head{display:grid;grid-template-columns:1.4fr 1fr 1fr;background:linear-gradient(180deg,#fafbff 0%,#fff 100%);border-bottom:1px solid rgba(32,43,120,.08)}
+.sp-compare-head-cell{padding:22px 24px;font-size:.95rem;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:10px}
+.sp-compare-head-cell.us{background:var(--grad-blue);color:#fff;justify-content:center;position:relative}
+.sp-compare-head-cell.us::after{content:'Recommandé';position:absolute;top:10px;right:14px;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:2px 8px;border-radius:var(--r-full)}
+.sp-compare-head-cell.them{justify-content:center;color:var(--text-secondary)}
+.sp-compare-head-brand{display:flex;align-items:center;gap:9px}
+.sp-compare-head-brand-mark{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem}
+.sp-compare-head-brand-mark.us{background:rgba(255,255,255,.2);color:#fff}
+.sp-compare-head-brand-mark.them{background:rgba(32,43,120,.08);color:var(--text-secondary)}
+.sp-compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-bottom:1px solid rgba(32,43,120,.05);transition:background var(--t-fast)}
+.sp-compare-row:last-child{border-bottom:none}
+.sp-compare-row:hover{background:rgba(32,43,120,.015)}
+.sp-compare-cell{padding:16px 24px;font-size:.875rem;color:var(--text-primary);display:flex;align-items:center;gap:10px}
+.sp-compare-cell.us-cell{justify-content:center;background:rgba(0,182,237,.03)}
+.sp-compare-cell.them-cell{justify-content:center;color:var(--text-tertiary)}
+.sp-check{width:22px;height:22px;border-radius:50%;background:rgba(14,154,107,.12);color:var(--color-success);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem}
+.sp-cross{width:22px;height:22px;border-radius:50%;background:rgba(123,128,153,.12);color:var(--text-tertiary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem}
+.sp-compare-note{max-width:920px;margin:22px auto 0;text-align:center;font-size:.82rem;color:var(--text-tertiary);line-height:1.6}
+
+/* BENEFITS */
+.sp-benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.sp-benefit{padding:32px 28px;background:#fff;border:1px solid rgba(32,43,120,.07);border-radius:var(--r-xl);transition:all var(--t-base) var(--ease-out);position:relative;overflow:hidden}
+.sp-benefit::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad-blue);transform:scaleX(0);transform-origin:left;transition:transform var(--t-slow) var(--ease-out)}
+.sp-benefit:hover{border-color:rgba(32,43,120,.14);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.sp-benefit:hover::before{transform:scaleX(1)}
+.sp-benefit-icon{width:52px;height:52px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:20px;box-shadow:var(--shadow-md);font-size:1.5rem}
+.sp-benefit-icon.blue{background:var(--grad-card-blue);box-shadow:var(--shadow-blue)}
+.sp-benefit-icon.cyan{background:var(--grad-card-cyan);box-shadow:var(--shadow-cyan)}
+.sp-benefit-icon.red{background:var(--grad-card-red)}
+.sp-benefit-icon.green{background:linear-gradient(135deg,#16a34a 0%,#0e9a6b 100%)}
+.sp-benefit-icon.violet{background:linear-gradient(135deg,#7c3aed 0%,#5b21b6 100%)}
+.sp-benefit-icon.amber{background:linear-gradient(135deg,#f59e0b 0%,#c07d10 100%)}
+.sp-benefit h3{font-size:1.15rem;font-weight:700;margin:0 0 10px;letter-spacing:-.02em}
+.sp-benefit p{font-size:.9rem;line-height:1.6;color:var(--text-secondary);margin:0}
+
+/* EDITIONS — Free / Pro (noms réels du code) */
+.sp-editions{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:0 auto}
+.sp-edition{position:relative;padding:36px 32px;background:#fff;border:1px solid rgba(32,43,120,.08);border-radius:var(--r-2xl);box-shadow:var(--shadow-md);transition:all var(--t-base) var(--ease-out);display:flex;flex-direction:column}
+.sp-edition:hover{box-shadow:var(--shadow-xl);transform:translateY(-4px)}
+.sp-edition-featured{border-color:var(--blue-500);box-shadow:var(--shadow-lg),0 0 0 1px var(--blue-500);background:linear-gradient(180deg,#fafbff 0%,#fff 60%)}
+.sp-edition-badge{position:absolute;top:-13px;left:32px;padding:5px 14px;border-radius:var(--r-full);font-size:.72rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.sp-edition-badge-free{background:rgba(123,128,153,.12);color:var(--text-secondary)}
+.sp-edition-badge-pro{background:var(--grad-blue);color:#fff;box-shadow:var(--shadow-blue)}
+.sp-edition-badge-enterprise{background:linear-gradient(135deg,#7c3aed 0%,#5b21b6 100%);color:#fff}
+.sp-edition-name{font-size:1.35rem;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+.sp-edition-tagline{font-size:.875rem;color:var(--text-tertiary);margin:0 0 24px}
+.sp-edition-price{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;min-height:3.2rem}
+.sp-edition-price-amount{font-size:2.6rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+.sp-edition-price-suffix{font-size:.9rem;color:var(--text-tertiary);font-weight:500}
+.sp-edition-price-note{font-size:.78rem;color:var(--text-tertiary);margin:0 0 24px}
+.sp-edition-features{list-style:none;padding:0;margin:0 0 32px;display:flex;flex-direction:column;gap:12px;flex:1}
+.sp-edition-feature{display:flex;align-items:flex-start;gap:11px;font-size:.9rem;color:var(--text-secondary);line-height:1.45}
+.sp-edition-feature strong{color:var(--text-primary)}
+.sp-edition-feature-check{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:.7rem}
+.sp-edition-free .sp-edition-feature-check{background:rgba(123,128,153,.12);color:var(--text-secondary)}
+.sp-edition-pro .sp-edition-feature-check{background:rgba(32,43,120,.1);color:var(--blue-500)}
+.sp-edition-enterprise .sp-edition-feature-check{background:rgba(124,58,237,.12);color:#7c3aed}
+.sp-edition-limit{display:flex;align-items:flex-start;gap:11px;font-size:.82rem;color:var(--text-tertiary);line-height:1.45;padding-left:31px;margin-top:-4px}
+.sp-edition .sp-btn{width:100%}
+
+/* Comparatif tarifaire vs SharePoint */
+.sp-price-compare{max-width:880px;margin:48px auto 0;background:#fff;border:1px solid rgba(32,43,120,.08);border-radius:var(--r-2xl);box-shadow:var(--shadow-lg);overflow:hidden}
+.sp-price-compare-head{padding:28px 32px 20px;text-align:center;border-bottom:1px solid rgba(32,43,120,.06);background:linear-gradient(180deg,#fafbff 0%,#fff 100%)}
+.sp-price-compare-head i{font-size:1.5rem;color:var(--blue-500);margin-bottom:10px;display:block}
+.sp-price-compare-head h3{font-size:1.15rem;font-weight:700;margin:0 0 6px;letter-spacing:-.02em}
+.sp-price-compare-head p{font-size:.875rem;color:var(--text-secondary);margin:0}
+.sp-price-compare-grid{display:grid;grid-template-columns:1fr 1fr}
+.sp-price-compare-col{padding:24px 28px}
+.sp-price-compare-col-head{display:flex;align-items:center;gap:8px;font-size:.95rem;font-weight:700;color:var(--text-secondary);padding-bottom:16px;border-bottom:2px solid rgba(32,43,120,.06);margin-bottom:12px}
+.sp-price-compare-col-head i{font-size:1.1rem}
+.sp-price-compare-us{background:rgba(0,182,237,.03);border-left:3px solid var(--blue-500)}
+.sp-price-compare-us .sp-price-compare-col-head{color:var(--blue-500);border-bottom-color:rgba(32,43,120,.12)}
+.sp-price-compare-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(32,43,120,.04)}
+.sp-price-compare-row:last-child{border-bottom:none}
+.sp-price-compare-row span{font-size:.82rem;color:var(--text-secondary);line-height:1.4}
+.sp-price-compare-row span small{color:var(--text-tertiary);font-size:.72rem}
+.sp-price-compare-row strong{font-size:1.05rem;font-weight:700;color:var(--text-primary);white-space:nowrap;text-align:right}
+.sp-price-compare-row strong small{display:block;font-size:.68rem;font-weight:500;color:var(--text-tertiary)}
+.sp-price-compare-total{padding-top:14px;margin-top:8px;border-top:2px solid rgba(32,43,120,.1);border-bottom:none}
+.sp-price-compare-total strong{font-size:1.25rem;color:var(--blue-500)}
+.sp-price-compare-us .sp-price-compare-total strong{color:var(--blue-500)}
+.sp-price-compare-note{padding:20px 32px;background:rgba(32,43,120,.04);border-top:1px solid rgba(32,43,120,.06);font-size:.875rem;color:var(--text-secondary);line-height:1.6;margin:0;display:flex;align-items:flex-start;gap:10px}
+.sp-price-compare-note i{color:var(--cyan-500);font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.sp-price-compare-note strong{color:var(--text-primary)}
+
+/* Encart "pas de licence par utilisateur" */
+.sp-no-per-user{max-width:880px;margin:32px auto 0;display:flex;align-items:center;gap:20px;padding:24px 28px;background:linear-gradient(135deg,#202b78 0%,#161d58 100%);border-radius:var(--r-xl);box-shadow:var(--shadow-blue);color:#fff;position:relative;overflow:hidden}
+.sp-no-per-user::before{content:'';position:absolute;top:-40%;right:-5%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,182,237,.25) 0%,transparent 70%);pointer-events:none}
+.sp-no-per-user-icon{width:56px;height:56px;border-radius:var(--r-lg);background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;flex-shrink:0;backdrop-filter:blur(8px)}
+.sp-no-per-user-text{position:relative}
+.sp-no-per-user-text h3{font-size:1.15rem;font-weight:700;margin:0 0 6px;color:#fff;letter-spacing:-.02em}
+.sp-no-per-user-text p{font-size:.875rem;line-height:1.55;margin:0;color:rgba(255,255,255,.82)}
+.sp-no-per-user-text strong{color:#fff}
+
+/* Tableau d'économie par taille d'équipe */
+.sp-savings-table-wrap{overflow-x:auto;padding:0 4px}
+.sp-savings-table{width:100%;border-collapse:collapse;font-size:.875rem;min-width:560px}
+.sp-savings-table thead th{padding:16px 14px;text-align:center;font-size:.78rem;font-weight:700;color:var(--text-secondary);background:rgba(32,43,120,.04);border-bottom:2px solid rgba(32,43,120,.1);white-space:nowrap}
+.sp-savings-table thead th:first-child{text-align:left}
+.sp-savings-table thead th small{display:block;font-size:.68rem;font-weight:500;color:var(--text-tertiary);margin-top:2px}
+.sp-savings-table tbody td{padding:14px;text-align:center;border-bottom:1px solid rgba(32,43,120,.06);color:var(--text-secondary);white-space:nowrap}
+.sp-savings-table tbody td:first-child{text-align:left;color:var(--text-primary)}
+.sp-savings-table tbody td small{display:block;font-size:.68rem;color:var(--text-tertiary);margin-top:1px}
+.sp-savings-table tbody tr:hover{background:rgba(32,43,120,.015)}
+.sp-savings-us{color:var(--blue-500)!important;font-weight:700;font-size:1rem!important}
+.sp-savings-neutral{color:var(--text-tertiary);font-size:.82rem!important}
+.sp-savings-win{color:var(--color-success);font-weight:700}
+.sp-savings-win strong{font-size:1.05rem}
+.sp-savings-highlight{background:rgba(0,182,237,.04)}
+.sp-savings-highlight td{border-bottom-color:rgba(0,182,237,.12)}
+
+/* Toggle Self-hosted / SaaS */
+.sp-billing-toggle{display:flex;align-items:center;justify-content:center;gap:0;margin:0 auto 48px;background:rgba(32,43,120,.06);border-radius:var(--r-full);padding:5px;width:fit-content;position:relative}
+.sp-billing-toggle-btn{padding:10px 24px;border:none;background:transparent;font-family:inherit;font-size:.875rem;font-weight:600;color:var(--text-secondary);cursor:pointer;border-radius:var(--r-full);transition:all var(--t-base) var(--ease-out);position:relative;z-index:1;display:flex;align-items:center;gap:8px}
+.sp-billing-toggle-btn i{font-size:1rem}
+.sp-billing-toggle-btn.active{color:#fff;background:var(--grad-blue);box-shadow:var(--shadow-blue)}
+.sp-billing-toggle-btn:not(.active):hover{color:var(--text-primary)}
+
+/* Price switcher — show/hide based on toggle */
+.sp-price-self{display:block}
+.sp-price-saas{display:none}
+body[data-billing="saas"] .sp-price-self{display:none}
+body[data-billing="saas"] .sp-price-saas{display:block}
+
+/* Enterprise band */
+.sp-enterprise-band{max-width:880px;margin:24px auto 0;background:linear-gradient(135deg,#1a1033 0%,#2d1b69 100%);border-radius:var(--r-2xl);padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;box-shadow:var(--shadow-xl);position:relative;overflow:hidden}
+.sp-enterprise-band::before{content:'';position:absolute;top:-50%;right:-10%;width:300px;height:300px;background:radial-gradient(circle,rgba(124,58,237,.3) 0%,transparent 70%);pointer-events:none}
+.sp-enterprise-band-text{position:relative;flex:1;min-width:280px}
+.sp-enterprise-band-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;background:rgba(255,255,255,.12);color:#fff;border-radius:var(--r-full);font-size:.72rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;margin-bottom:14px}
+.sp-enterprise-band h3{font-size:1.5rem;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-.02em}
+.sp-enterprise-band p{font-size:.92rem;color:rgba(255,255,255,.7);margin:0;line-height:1.55}
+.sp-enterprise-band-features{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px}
+.sp-enterprise-band-feature{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:rgba(255,255,255,.85)}
+.sp-enterprise-band-feature i{color:#a78bfa;font-size:.95rem}
+.sp-enterprise-band .sp-btn{background:#fff;color:#5b21b6;flex-shrink:0}
+.sp-enterprise-band .sp-btn:hover{background:rgba(255,255,255,.95);transform:translateY(-1px)}
+
+/* DEPLOY */
+.sp-deploy-visual{position:relative;max-width:920px;margin:0 auto 48px;padding:48px 32px;background:var(--grad-hero);border-radius:var(--r-2xl);box-shadow:var(--shadow-2xl);overflow:hidden}
+.sp-deploy-visual::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.sp-deploy-core{position:relative;width:96px;height:96px;margin:0 auto 36px;border-radius:var(--r-2xl);background:var(--grad-cyan);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 0 0 8px rgba(0,182,237,.15),0 0 60px rgba(0,182,237,.4);font-size:2.5rem}
+.sp-deploy-core::after{content:'';position:absolute;inset:-8px;border-radius:var(--r-2xl);border:1px solid rgba(0,182,237,.3);animation:sp-pulse 3s ease-out infinite}
+@keyframes sp-pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+.sp-deploy-envs{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.sp-deploy-env{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-full);color:rgba(255,255,255,.92);font-size:.82rem;font-weight:500;backdrop-filter:blur(8px);transition:all var(--t-base) var(--ease-out)}
+.sp-deploy-env:hover{background:rgba(255,255,255,.14);border-color:rgba(0,182,237,.4);transform:translateY(-2px)}
+.sp-deploy-env i{color:var(--cyan-400);font-size:1rem}
+.sp-deploy-text{max-width:640px;margin:0 auto;text-align:center;font-size:1.0625rem;line-height:1.65;color:var(--text-secondary)}
+
+/* PRICING POINTS */
+.sp-pricing-points{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;max-width:1000px;margin:0 auto}
+.sp-pricing-point{text-align:center;padding:28px 18px;background:#fff;border:1px solid rgba(32,43,120,.07);border-radius:var(--r-lg);transition:all var(--t-base) var(--ease-out)}
+.sp-pricing-point:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.sp-pricing-point-icon{width:44px;height:44px;border-radius:12px;background:rgba(32,43,120,.07);color:var(--blue-500);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.3rem}
+.sp-pricing-point-text{font-size:.86rem;font-weight:600;color:var(--text-primary);line-height:1.4}
+
+/* CONFIANCE — bandeau de réassurance */
+.sp-trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.sp-trust-item{text-align:center;padding:32px 22px;background:#fff;border:1px solid rgba(32,43,120,.07);border-radius:var(--r-lg);transition:all var(--t-base) var(--ease-out);position:relative;overflow:hidden}
+.sp-trust-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-500),var(--cyan-500));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease-out)}
+.sp-trust-item:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.sp-trust-item:hover::before{transform:scaleX(1)}
+.sp-trust-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(32,43,120,.08),rgba(0,182,237,.08));color:var(--blue-500);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.5rem}
+.sp-trust-item h3{font-size:1rem;font-weight:700;color:var(--text-primary);margin:0 0 10px;letter-spacing:-.01em}
+.sp-trust-item p{font-size:.84rem;color:var(--text-secondary);line-height:1.55;margin:0}
+
+/* STATS — chiffres clés */
+.sp-stats{display:flex;gap:0;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto;padding:8px 0}
+.sp-stat{text-align:center;padding:16px 36px;position:relative}
+.sp-stat:not(:last-child)::after{content:'';position:absolute;right:0;top:25%;height:50%;width:1px;background:rgba(32,43,120,.1)}
+.sp-stat-num{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:var(--blue-500);letter-spacing:-.03em;line-height:1}
+.sp-stat-label{font-size:.78rem;color:var(--text-tertiary);margin-top:6px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+
+/* HERO amélioré — gradient subtil */
+.sp-hero{background:linear-gradient(180deg,rgba(32,43,120,.02) 0%,rgba(0,182,237,.01) 50%,transparent 100%)}
+
+/* CTA amélioré — gradient plus riche */
+.sp-cta{background:linear-gradient(135deg,#202b78 0%,#1a2266 40%,#0d6efd 100%);position:relative;overflow:hidden}
+.sp-cta::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%);pointer-events:none}
+.sp-cta-inner{position:relative;z-index:1}
+
+/* FAQ */
+.sp-faq{max-width:760px;margin:0 auto}
+.sp-faq-item{border:1px solid rgba(32,43,120,.08);border-radius:var(--r-lg);margin-bottom:12px;background:#fff;overflow:hidden;transition:all var(--t-base) var(--ease-out)}
+.sp-faq-item:hover{border-color:rgba(32,43,120,.14)}
+.sp-faq-item[open]{border-color:rgba(32,43,120,.18);box-shadow:var(--shadow-md)}
+.sp-faq-item summary{list-style:none;cursor:pointer;padding:20px 24px;font-size:1rem;font-weight:600;color:var(--text-primary);display:flex;align-items:center;justify-content:space-between;gap:16px;letter-spacing:-.01em}
+.sp-faq-item summary::-webkit-details-marker{display:none}
+.sp-faq-item summary::after{content:'+';font-size:1.4rem;font-weight:300;color:var(--blue-500);flex-shrink:0;transition:transform var(--t-base) var(--ease-out)}
+.sp-faq-item[open] summary::after{transform:rotate(45deg)}
+.sp-faq-answer{padding:0 24px 22px;font-size:.925rem;line-height:1.65;color:var(--text-secondary)}
+
+/* BANNIÈRE — Bientôt en production */
+.sp-soon-banner{position:fixed;top:0;left:0;right:0;z-index:1031;background:linear-gradient(90deg,#f59e0b 0%,#f97316 100%);border-bottom:1px solid rgba(217,119,6,.4);padding:11px 28px;text-align:center;font-size:.86rem;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.sp-soon-banner i{color:#fff;font-size:1rem}
+.sp-soon-banner strong{color:#fff;font-weight:700}
+
+/* CTA */
+.sp-cta{position:relative;padding:88px 28px;background:var(--grad-hero);overflow:hidden}
+.sp-cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse 50% 50% at 20% 30%,rgba(0,182,237,.18) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 80% 70%,rgba(32,43,120,.4) 0%,transparent 60%);pointer-events:none}
+.sp-cta::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.sp-cta-inner{position:relative;max-width:720px;margin:0 auto;text-align:center}
+.sp-cta h2{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;line-height:1.15;letter-spacing:-.03em;color:#fff;margin:0 0 20px}
+.sp-cta p{font-size:1.125rem;line-height:1.65;color:rgba(255,255,255,.78);margin:0 0 36px}
+.sp-cta-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.sp-cta .sp-btn-primary{background:#fff;color:var(--blue-700);box-shadow:0 10px 30px -8px rgba(0,0,0,.4)}
+.sp-cta .sp-btn-primary:hover{background:rgba(255,255,255,.95);color:var(--blue-800)}
+.sp-cta .sp-btn-outline{color:#fff;border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.sp-cta .sp-btn-outline:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.12);color:#fff}
+.sp-cta-guarantee{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;margin-top:32px}
+.sp-cta-guarantee span{font-size:.85rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:7px}
+.sp-cta-guarantee i{color:#4cd964;font-size:.95rem}
+
+/* FOOTER */
+.sp-footer{background:#0b0f30;color:rgba(255,255,255,.6);padding:56px 28px 32px}
+.sp-footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start}
+.sp-footer-brand{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.sp-footer-brand-mark{width:40px;height:40px;border-radius:var(--r-lg);background:var(--grad-blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.25rem}
+.sp-footer-brand-name{font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:-.02em}
+.sp-footer-tagline{font-size:.9rem;line-height:1.6;max-width:380px;margin:0 0 20px}
+.sp-footer-links{display:flex;flex-wrap:wrap;gap:12px 24px}
+.sp-footer-link{color:rgba(255,255,255,.6);text-decoration:none;font-size:.875rem;font-weight:500;transition:color var(--t-fast);display:inline-flex;align-items:center;gap:7px}
+.sp-footer-link:hover{color:#fff}
+.sp-footer-link i{font-size:1rem}
+.sp-footer-bottom{max-width:1200px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;font-size:.82rem;color:rgba(255,255,255,.4)}
+
+/* REVEAL */
+.sp-reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.sp-reveal.sp-in{opacity:1;transform:translateY(0)}
+.sp-reveal-d1{transition-delay:.08s}
+.sp-reveal-d2{transition-delay:.16s}
+.sp-reveal-d3{transition-delay:.24s}
+.sp-reveal-d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){
+  .sp-reveal{opacity:1;transform:none;transition:none}
+  .sp-card-main,.sp-card-search,.sp-card-perms,.sp-deploy-core::after,.sp-card-search-input::after{animation:none}
+}
+
+/* RESPONSIVE */
+@media (max-width:1024px){.sp-why-grid{grid-template-columns:repeat(3,1fr)}.sp-pricing-points{grid-template-columns:repeat(3,1fr)}.sp-trust-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){
+  .sp-nav{display:none}.sp-hero{padding:120px 22px 72px}
+  .sp-hero-inner{grid-template-columns:1fr;gap:40px}.sp-hero-visual{height:380px}
+  .sp-benefits-grid{grid-template-columns:repeat(2,1fr)}.sp-editions{grid-template-columns:1fr;max-width:480px}
+  .sp-price-compare-grid{grid-template-columns:1fr}
+  .sp-price-compare-us{border-left:none;border-top:3px solid var(--blue-500)}
+  .sp-footer-inner{grid-template-columns:1fr;gap:32px}.sp-section{padding:72px 22px}
+  .sp-stats{flex-wrap:wrap;gap:8px}.sp-stat{padding:12px 20px}.sp-stat:not(:last-child)::after{display:none}
+}
+@media (max-width:640px){
+  .sp-header-inner{padding:0 18px}.sp-btn-ghost{display:none}
+  .sp-hero{padding:110px 18px 60px}.sp-hero h1{font-size:2.1rem}.sp-hero-lead{font-size:1rem}
+  .sp-hero-cta .sp-btn{flex:1}.sp-hero-visual{height:340px}
+  .sp-card-main{right:0;height:280px}.sp-card-search{left:0;width:220px}.sp-card-perms{width:190px}
+  .sp-why-grid{grid-template-columns:repeat(2,1fr)}.sp-benefits-grid{grid-template-columns:1fr}
+  .sp-pricing-points{grid-template-columns:repeat(2,1fr)}.sp-trust-grid{grid-template-columns:1fr}
+  .sp-compare-head-cell,.sp-compare-cell{padding:14px 12px;font-size:.8rem}
+  .sp-edition{padding:28px 22px}.sp-section{padding:60px 18px}.sp-section-head{margin-bottom:44px}
+  .sp-no-per-user{flex-direction:column;text-align:center;gap:14px;padding:20px 22px}
+  .sp-no-per-user-icon{margin:0 auto}
+  .sp-deploy-visual{padding:36px 18px}.sp-cta{padding:64px 18px}.sp-cta-buttons .sp-btn{flex:1}
+  .sp-cta-guarantee{gap:16px}.sp-cta-guarantee span{font-size:.78rem}
+  .sp-footer{padding:44px 18px 24px}
+}
+@media (max-width:420px){.sp-why-grid{grid-template-columns:1fr}.sp-pricing-points{grid-template-columns:1fr}.sp-card-perms{display:none}}
+
+/* DÉMO VISUELLE — captures réelles de l'app */
+.sp-demo{max-width:960px;margin:0 auto}
+.sp-demo-slider{position:relative;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-2xl);border:1px solid rgba(32,43,120,.08);background:#fff}
+.sp-demo-slides{position:relative;height:600px;overflow:hidden}
+.sp-demo-slide{position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease-out)}
+.sp-demo-slide.active{opacity:1}
+.sp-demo-slide img{width:100%;height:100%;object-fit:cover;object-position:top}
+.sp-demo-titlebar{background:#f0f2f8;padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(32,43,120,.06);position:absolute;top:0;left:0;right:0;z-index:2}
+.sp-demo-dots-bar{display:flex;gap:6px}
+.sp-demo-dots-bar span{width:11px;height:11px;border-radius:50%}
+.sp-demo-dots-bar span:nth-child(1){background:#ff5f57}
+.sp-demo-dots-bar span:nth-child(2){background:#febc2e}
+.sp-demo-dots-bar span:nth-child(3){background:#28c840}
+.sp-demo-title-text{font-size:.78rem;color:var(--text-tertiary);font-weight:500;margin-left:8px}
+.sp-demo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;padding:24px 20px 16px;z-index:2}
+.sp-demo-caption-title{font-size:.95rem;font-weight:700;margin-bottom:3px}
+.sp-demo-caption-sub{font-size:.78rem;color:rgba(255,255,255,.7)}
+.sp-demo-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);border:none;color:var(--blue-500);font-size:1.1rem;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);transition:all var(--t-fast)}
+.sp-demo-nav-btn:hover{background:#fff;transform:translateY(-50%) scale(1.1)}
+.sp-demo-nav-prev{left:12px}
+.sp-demo-nav-next{right:12px}
+.sp-demo-thumbs{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.sp-demo-thumb{width:80px;height:50px;border-radius:var(--r-sm);overflow:hidden;border:2px solid transparent;cursor:pointer;transition:all var(--t-fast);opacity:.6}
+.sp-demo-thumb img{width:100%;height:100%;object-fit:cover;object-position:top}
+.sp-demo-thumb:hover{opacity:.9}
+.sp-demo-thumb.active{border-color:var(--blue-500);opacity:1}
+.sp-demo-badge-real{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(25,135,84,.1);color:#198754;border-radius:var(--r-full);font-size:.72rem;font-weight:600;margin-top:16px}
+.sp-demo-badge-real i{font-size:.7rem}
+@media (max-width:640px){.sp-demo-slides{height:380px}.sp-demo-thumb{width:60px;height:38px}}
+
+/* MODAL — formulaire d'inscription / paiement */
+.sp-modal-overlay{position:fixed;inset:0;background:rgba(8,10,22,.55);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:40px 18px;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity var(--t-base) var(--ease-out),visibility var(--t-base)}
+.sp-modal-overlay.open{opacity:1;visibility:visible}
+.sp-modal{background:#fff;border-radius:var(--r-2xl);max-width:520px;width:100%;margin:auto;box-shadow:var(--shadow-2xl);transform:translateY(20px) scale(.97);transition:transform var(--t-base) var(--ease-out)}
+.sp-modal-overlay.open .sp-modal{transform:translateY(0) scale(1)}
+.sp-modal-head{padding:28px 28px 0;position:relative}
+.sp-modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:var(--r-md);border:none;background:rgba(32,43,120,.06);color:var(--text-secondary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t-fast)}
+.sp-modal-close:hover{background:rgba(32,43,120,.12);color:var(--text-primary)}
+.sp-modal-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:var(--r-full);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px}
+.sp-modal-badge.starter{background:rgba(25,135,84,.1);color:#198754}
+.sp-modal-badge.pro{background:rgba(32,43,120,.1);color:var(--blue-500)}
+.sp-modal-badge.enterprise{background:rgba(255,193,7,.12);color:#b8860b}
+.sp-modal h3{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin:0 0 6px;color:var(--text-primary)}
+.sp-modal-subtitle{font-size:.9rem;color:var(--text-secondary);margin:0 0 24px;line-height:1.5}
+.sp-modal-body{padding:0 28px 28px}
+.sp-form-group{margin-bottom:16px}
+.sp-form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:6px}
+.sp-form-input{width:100%;padding:11px 14px;border:1px solid rgba(32,43,120,.14);border-radius:var(--r-md);font-family:inherit;font-size:.9rem;color:var(--text-primary);background:#fff;transition:border-color var(--t-fast),box-shadow var(--t-fast);box-sizing:border-box}
+.sp-form-input:focus{outline:none;border-color:var(--blue-500);box-shadow:0 0 0 3px rgba(32,43,120,.1)}
+.sp-form-input::placeholder{color:var(--text-tertiary)}
+.sp-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sp-form-summary{background:#f8f9fc;border:1px solid rgba(32,43,120,.07);border-radius:var(--r-lg);padding:18px;margin:20px 0}
+.sp-form-summary-row{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;padding:6px 0}
+.sp-form-summary-row:not(:last-child){border-bottom:1px solid rgba(32,43,120,.06)}
+.sp-form-summary-label{color:var(--text-secondary)}
+.sp-form-summary-value{font-weight:700;color:var(--text-primary)}
+.sp-form-summary-total{font-size:1.1rem;font-weight:800;color:var(--blue-500)}
+.sp-wero-box{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:var(--r-lg);padding:20px;color:#fff;margin:20px 0}
+.sp-wero-title{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:700;margin-bottom:14px}
+.sp-wero-title i{font-size:1.1rem;color:#00b6ed}
+.sp-wero-info{display:flex;flex-direction:column;gap:8px}
+.sp-wero-row{display:flex;justify-content:space-between;align-items:center;font-size:.84rem;padding:8px 12px;background:rgba(255,255,255,.07);border-radius:var(--r-md)}
+.sp-wero-row-label{color:rgba(255,255,255,.6)}
+.sp-wero-row-value{font-weight:600;color:#fff;font-family:monospace;letter-spacing:.02em}
+.sp-wero-copy{background:rgba(0,182,237,.2);border:1px solid rgba(0,182,237,.3);color:#00b6ed;padding:4px 10px;border-radius:var(--r-sm);font-size:.72rem;cursor:pointer;transition:all var(--t-fast);font-family:inherit}
+.sp-wero-copy:hover{background:rgba(0,182,237,.3)}
+.sp-wero-note{font-size:.76rem;color:rgba(255,255,255,.5);margin-top:12px;line-height:1.5}
+.sp-form-submit{width:100%;padding:14px;font-size:.95rem;margin-top:8px}
+.sp-form-success{display:none;text-align:center;padding:20px 0}
+.sp-form-success.show{display:block}
+.sp-form-success-icon{width:56px;height:56px;border-radius:50%;background:rgba(25,135,84,.1);color:#198754;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem}
+.sp-form-success h4{font-size:1.2rem;font-weight:800;margin:0 0 8px;color:var(--text-primary)}
+.sp-form-success p{font-size:.88rem;color:var(--text-secondary);margin:0;line-height:1.55}
+.sp-modal-secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.76rem;color:var(--text-tertiary);margin-top:16px}
+.sp-modal-secure i{color:#198754}
+</style>
+</head>
+<body>
+
+<!-- BANNIÈRE — Bientôt en production -->
+<div class="sp-soon-banner">
+  <i class="bi bi-rocket-takeoff"></i>
+  <span><strong>Bientôt en production</strong> — nous finalisons les derniers réglages, merci de patienter…</span>
+</div>
+
+<!-- HEADER -->
+<header class="sp-header" id="spHeader">
+  <div class="sp-header-inner">
+    <a class="sp-brand" href="#">
+      <span class="sp-brand-mark"><i class="bi bi-folder2-open"></i></span>
+      SyncPoint
+    </a>
+    <nav class="sp-nav">
+      <a class="sp-nav-link" href="#pourquoi">Pourquoi</a>
+      <a class="sp-nav-link" href="#demo">Aperçu</a>
+      <a class="sp-nav-link" href="#comparatif">Comparatif</a>
+      <a class="sp-nav-link" href="#avantages">Avantages</a>
+      <a class="sp-nav-link" href="#editions">Éditions</a>
+      <a class="sp-nav-link" href="#confiance">Confiance</a>
+      <a class="sp-nav-link" href="#faq">FAQ</a>
+    </nav>
+    <div class="sp-actions">
+      <a class="sp-btn sp-btn-primary" href="#" data-plan="starter"><i class="bi bi-box-arrow-in-right"></i>Essayer dès 20€/mois</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="sp-hero">
+  <div class="sp-hero-inner">
+    <div class="sp-reveal">
+      <span class="sp-eyebrow">
+        <span class="sp-eyebrow-tag"><i class="bi bi-stars"></i> Nouveau</span>
+        Alternative moderne à SharePoint
+      </span>
+      <h1>Vos fichiers,<br><span class="sp-hl">partout avec vous.</span></h1>
+      <p class="sp-hero-lead">Gérez, partagez et sécurisez vos documents d'entreprise depuis un seul endroit. Permissions inspirées de NTFS, édition OnlyOffice, recherche rapide, notifications in-app. Hébergé par nos soins ou on-premise pour les grands comptes.</p>
+      <div class="sp-hero-cta">
+        <a class="sp-btn sp-btn-primary sp-btn-lg" href="#" data-plan="starter"><i class="bi bi-rocket-takeoff"></i>Essayer dès 20€/mois</a>
+        <a class="sp-btn sp-btn-outline sp-btn-lg" href="#editions"><i class="bi bi-play-circle"></i>Demander une démonstration</a>
+      </div>
+      <div class="sp-hero-meta">
+        <span class="sp-hero-meta-item"><i class="bi bi-check-circle-fill"></i> Hébergement inclus dès 20€/mois</span>
+        <span class="sp-hero-meta-item"><i class="bi bi-check-circle-fill"></i> Aucune licence par utilisateur</span>
+        <span class="sp-hero-meta-item"><i class="bi bi-check-circle-fill"></i> On-premise pour les grands comptes</span>
+      </div>
+    </div>
+
+    <!-- Illustration reflétant l'app réelle : documents, équipes, recherche, permissions NTFS -->
+    <div class="sp-hero-visual sp-reveal sp-reveal-d2">
+      <div class="sp-card sp-card-main">
+        <div class="sp-card-head">
+          <div class="sp-card-dots"><span></span><span></span><span></span></div>
+          <span class="sp-card-title">SyncPoint · Espace équipe</span>
+        </div>
+        <div class="sp-card-body">
+          <div class="sp-tile"><span class="sp-tile-icon blue"><i class="bi bi-folder"></i></span><span class="sp-tile-label">Documents</span><span class="sp-tile-sub">1 248 fichiers</span></div>
+          <div class="sp-tile"><span class="sp-tile-icon cyan"><i class="bi bi-people"></i></span><span class="sp-tile-label">Équipes & groupes</span><span class="sp-tile-sub">12 espaces</span></div>
+          <div class="sp-tile"><span class="sp-tile-icon green"><i class="bi bi-file-earmark-text"></i></span><span class="sp-tile-label">Édition OnlyOffice</span><span class="sp-tile-sub">Word · Excel · PPT</span></div>
+          <div class="sp-tile"><span class="sp-tile-icon red"><i class="bi bi-shield-check"></i></span><span class="sp-tile-label">Permissions NTFS</span><span class="sp-tile-sub">Héritage · refus explicite</span></div>
+        </div>
+      </div>
+
+      <div class="sp-card sp-card-search">
+        <div class="sp-card-search-row">
+          <span class="sp-card-search-icon"><i class="bi bi-search"></i></span>
+          <span class="sp-card-search-input"></span>
+        </div>
+        <div class="sp-card-search-label">Recherche par nom, extension, propriétaire, groupe</div>
+      </div>
+
+      <div class="sp-card sp-card-perms">
+        <div class="sp-card-perms-title"><i class="bi bi-shield-lock"></i> Permissions dossier</div>
+        <div class="sp-card-perms-row"><span class="sp-card-perms-check on"><i class="bi bi-check"></i></span> Lecture</div>
+        <div class="sp-card-perms-row"><span class="sp-card-perms-check on"><i class="bi bi-check"></i></span> Écriture</div>
+        <div class="sp-card-perms-row"><span class="sp-card-perms-check on"><i class="bi bi-check"></i></span> Upload</div>
+        <div class="sp-card-perms-row"><span class="sp-card-perms-check off"><i class="bi bi-dash"></i></span> Suppression</div>
+        <div class="sp-card-perms-row"><span class="sp-card-perms-check on"><i class="bi bi-check"></i></span> Partage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS — chiffres clés -->
+<section class="sp-section sp-section-tight" style="padding:32px 0">
+  <div class="sp-container">
+    <div class="sp-stats sp-reveal">
+      <div class="sp-stat"><div class="sp-stat-num">9</div><div class="sp-stat-label">Permissions NTFS</div></div>
+      <div class="sp-stat"><div class="sp-stat-num">3</div><div class="sp-stat-label">Plans tarifaires</div></div>
+      <div class="sp-stat"><div class="sp-stat-num">0€</div><div class="sp-stat-label">Par utilisateur</div></div>
+      <div class="sp-stat"><div class="sp-stat-num">100%</div><div class="sp-stat-label">Open-source</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- POURQUOI — features réelles implémentées -->
+<section class="sp-section" id="pourquoi">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-zap"></i> Pourquoi nous</span>
+      <h2 class="sp-section-title">Pourquoi choisir SyncPoint ?</h2>
+      <p class="sp-section-subtitle">Une plateforme pensée pour la simplicité, l'indépendance et la maîtrise totale de votre infrastructure documentaire.</p>
+    </div>
+    <div class="sp-why-grid">
+      <div class="sp-why-item sp-reveal"><span class="sp-why-icon"><i class="bi bi-shield-check"></i></span><span class="sp-why-text">Permissions inspirées de NTFS</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-people"></i></span><span class="sp-why-text">Groupes & espaces collaboratifs</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d2"><span class="sp-why-icon"><i class="bi bi-search"></i></span><span class="sp-why-text">Recherche avancée multicritères</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d3"><span class="sp-why-icon"><i class="bi bi-file-earmark-text"></i></span><span class="sp-why-text">Édition OnlyOffice intégrée</span></div>
+      <div class="sp-why-item sp-reveal"><span class="sp-why-icon"><i class="bi bi-clock-history"></i></span><span class="sp-why-text">Historique des versions</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-share"></i></span><span class="sp-why-text">Liens de partage sécurisés</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d2"><span class="sp-why-icon"><i class="bi bi-trash"></i></span><span class="sp-why-text">Corbeille & restauration</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d3"><span class="sp-why-icon"><i class="bi bi-bookmark"></i></span><span class="sp-why-text">Favoris & bookmarks</span></div>
+      <div class="sp-why-item sp-reveal"><span class="sp-why-icon"><i class="bi bi-bell"></i></span><span class="sp-why-text">Notifications in-app</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-clipboard-data"></i></span><span class="sp-why-text">Journal d'audit complet</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d3"><span class="sp-why-icon"><i class="bi bi-code-slash"></i></span><span class="sp-why-text">API REST + JWT (Swagger)</span></div>
+      <div class="sp-why-item sp-reveal"><span class="sp-why-icon"><i class="bi bi-database-check"></i></span><span class="sp-why-text">Sauvegardes & restauration</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-translate"></i></span><span class="sp-why-text">Bilingue Français / Anglais</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d2"><span class="sp-why-icon"><i class="bi bi-unlock"></i></span><span class="sp-why-text">Pas de dépendance Microsoft</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d3"><span class="sp-why-icon"><i class="bi bi-cloud-check"></i></span><span class="sp-why-text">Hébergement & sauvegardes inclus</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DÉMO VISUELLE — captures réelles de l'app -->
+<section class="sp-section" id="demo">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-eye"></i> Aperçu</span>
+      <h2 class="sp-section-title">À quoi ressemble SyncPoint ?</h2>
+      <p class="sp-section-subtitle">Captures d'écran réelles de l'application. Naviguez entre les vues pour découvrir l'interface.</p>
+    </div>
+    <div class="sp-demo sp-reveal">
+      <div class="sp-demo-slider">
+        <div class="sp-demo-slides" id="spDemoSlides">
+          <div class="sp-demo-slide active" data-slide="0">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Connexion</span></div>
+            <img src="/SyncPoint/captures/01-login.png" alt="Page de connexion SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Page de connexion</div><div class="sp-demo-caption-sub">Authentification sécurisée par e-mail et mot de passe</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="1">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Tableau de bord</span></div>
+            <img src="/SyncPoint/captures/02-dashboard.png" alt="Tableau de bord SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Tableau de bord</div><div class="sp-demo-caption-sub">Vue d'ensemble : dossiers, fichiers, groupes et activité</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="2">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Explorateur de fichiers</span></div>
+            <img src="/SyncPoint/captures/03-browse.png" alt="Explorateur de fichiers SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Explorateur de fichiers</div><div class="sp-demo-caption-sub">Navigation dans vos dossiers, upload et gestion documentaire</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="3">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Contenu d'un dossier</span></div>
+            <img src="/SyncPoint/captures/16-folder-content.png" alt="Contenu d'un dossier SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Contenu d'un dossier</div><div class="sp-demo-caption-sub">Fichiers et sous-dossiers avec permissions NTFS</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="3b">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Édition OnlyOffice (Excel)</span></div>
+            <img src="/SyncPoint/captures/18-onlyoffice-xlsx.png" alt="Édition Excel dans OnlyOffice" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Édition OnlyOffice — Excel</div><div class="sp-demo-caption-sub">Éditez vos fichiers Excel directement dans le navigateur</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="3c">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Édition OnlyOffice (CSV)</span></div>
+            <img src="/SyncPoint/captures/20-onlyoffice-csv.png" alt="Édition CSV dans OnlyOffice" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Édition OnlyOffice — CSV</div><div class="sp-demo-caption-sub">Visualisez et éditez vos fichiers CSV</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="3d">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Aperçu PDF</span></div>
+            <img src="/SyncPoint/captures/19-pdf-preview.png" alt="Aperçu PDF SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Aperçu PDF</div><div class="sp-demo-caption-sub">Visualisez vos documents PDF sans téléchargement</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="3e">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Aperçu image (JPG)</span></div>
+            <img src="/SyncPoint/captures/17-image-preview.png" alt="Aperçu image SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Aperçu image</div><div class="sp-demo-caption-sub">Visualisez vos images en haute résolution</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="4">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Journal d'audit</span></div>
+            <img src="/SyncPoint/captures/04-audit.png" alt="Journal d'audit SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Journal d'audit</div><div class="sp-demo-caption-sub">Toutes les actions tracées : connexion, modifications, téléchargements</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="5">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Groupes</span></div>
+            <img src="/SyncPoint/captures/14-groups.png" alt="Groupes SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Groupes & espaces collaboratifs</div><div class="sp-demo-caption-sub">Organisez vos équipes et gérez les accès par groupe</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="6">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Recherche</span></div>
+            <img src="/SyncPoint/captures/11-search.png" alt="Recherche SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Recherche avancée</div><div class="sp-demo-caption-sub">Recherche par nom, extension, propriétaire, groupe</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="7">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Partages</span></div>
+            <img src="/SyncPoint/captures/15-share.png" alt="Partages SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Liens de partage</div><div class="sp-demo-caption-sub">Partagez vos fichiers avec expiration et mot de passe</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="8">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Corbeille</span></div>
+            <img src="/SyncPoint/captures/12-trash.png" alt="Corbeille SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Corbeille & restauration</div><div class="sp-demo-caption-sub">Récupérez vos fichiers supprimés par erreur</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="9">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Notifications</span></div>
+            <img src="/SyncPoint/captures/13-notifications.png" alt="Notifications SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Notifications in-app</div><div class="sp-demo-caption-sub">Soyez informé des actions sur vos fichiers et dossiers</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="10">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Favoris</span></div>
+            <img src="/SyncPoint/captures/06-bookmarks.png" alt="Favoris SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Favoris & bookmarks</div><div class="sp-demo-caption-sub">Retrouvez rapidement vos fichiers et dossiers marqués</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="11">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Administration</span></div>
+            <img src="/SyncPoint/captures/07-admin.png" alt="Administration SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Panneau d'administration</div><div class="sp-demo-caption-sub">Gestion des utilisateurs, groupes et paramètres système</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="12">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Sauvegardes</span></div>
+            <img src="/SyncPoint/captures/08-backup.png" alt="Sauvegardes SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Sauvegardes & restauration</div><div class="sp-demo-caption-sub">Backups automatiques et restauration en un clic</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="13">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Clés API</span></div>
+            <img src="/SyncPoint/captures/09-apikeys.png" alt="Clés API SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Clés API</div><div class="sp-demo-caption-sub">Intégrez SyncPoint via l'API REST avec authentification JWT</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="14">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · Profil</span></div>
+            <img src="/SyncPoint/captures/10-profile.png" alt="Profil SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">Profil utilisateur</div><div class="sp-demo-caption-sub">Gérez vos informations et préférences</div></div>
+          </div>
+          <div class="sp-demo-slide" data-slide="15">
+            <div class="sp-demo-titlebar"><div class="sp-demo-dots-bar"><span></span><span></span><span></span></div><span class="sp-demo-title-text">SyncPoint · FAQ</span></div>
+            <img src="/SyncPoint/captures/05-faq.png" alt="FAQ SyncPoint" loading="lazy">
+            <div class="sp-demo-caption"><div class="sp-demo-caption-title">FAQ intégrée</div><div class="sp-demo-caption-sub">Questions fréquentes accessibles directement dans l'app</div></div>
+          </div>
+        </div>
+        <button class="sp-demo-nav-btn sp-demo-nav-prev" id="spDemoPrev" aria-label="Précédent"><i class="bi bi-chevron-left"></i></button>
+        <button class="sp-demo-nav-btn sp-demo-nav-next" id="spDemoNext" aria-label="Suivant"><i class="bi bi-chevron-right"></i></button>
+      </div>
+      <div class="sp-demo-thumbs" id="spDemoThumbs">
+        <div class="sp-demo-thumb active" data-thumb="0"><img src="/SyncPoint/captures/01-login.png" alt="Connexion" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="1"><img src="/SyncPoint/captures/02-dashboard.png" alt="Dashboard" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="2"><img src="/SyncPoint/captures/03-browse.png" alt="Browse" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="3"><img src="/SyncPoint/captures/16-folder-content.png" alt="Dossier" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="3b"><img src="/SyncPoint/captures/18-onlyoffice-xlsx.png" alt="Excel" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="3c"><img src="/SyncPoint/captures/20-onlyoffice-csv.png" alt="CSV" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="3d"><img src="/SyncPoint/captures/19-pdf-preview.png" alt="PDF" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="3e"><img src="/SyncPoint/captures/17-image-preview.png" alt="Image" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="4"><img src="/SyncPoint/captures/04-audit.png" alt="Audit" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="5"><img src="/SyncPoint/captures/14-groups.png" alt="Groupes" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="6"><img src="/SyncPoint/captures/11-search.png" alt="Recherche" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="7"><img src="/SyncPoint/captures/15-share.png" alt="Partages" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="8"><img src="/SyncPoint/captures/12-trash.png" alt="Corbeille" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="9"><img src="/SyncPoint/captures/13-notifications.png" alt="Notifications" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="10"><img src="/SyncPoint/captures/06-bookmarks.png" alt="Favoris" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="11"><img src="/SyncPoint/captures/07-admin.png" alt="Admin" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="12"><img src="/SyncPoint/captures/08-backup.png" alt="Backup" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="13"><img src="/SyncPoint/captures/09-apikeys.png" alt="API" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="14"><img src="/SyncPoint/captures/10-profile.png" alt="Profil" loading="lazy"></div>
+        <div class="sp-demo-thumb" data-thumb="15"><img src="/SyncPoint/captures/05-faq.png" alt="FAQ" loading="lazy"></div>
+      </div>
+      <div style="text-align:center"><span class="sp-demo-badge-real"><i class="bi bi-camera-fill"></i> Captures réelles de l'application SyncPoint</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIF -->
+<section class="sp-section sp-section-alt" id="comparatif">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-scale"></i> Comparatif</span>
+      <h2 class="sp-section-title">SyncPoint <span class="sp-hl">vs</span> Microsoft SharePoint</h2>
+      <p class="sp-section-subtitle">Un comparatif factuel des capacités de déploiement, de coût et d'indépendance.</p>
+    </div>
+    <div class="sp-compare sp-reveal">
+      <div class="sp-compare-head">
+        <div class="sp-compare-head-cell">Critère</div>
+        <div class="sp-compare-head-cell us"><span class="sp-compare-head-brand"><span class="sp-compare-head-brand-mark us"><i class="bi bi-folder2-open"></i></span>SyncPoint</span></div>
+        <div class="sp-compare-head-cell them"><span class="sp-compare-head-brand"><span class="sp-compare-head-brand-mark them"><i class="bi bi-grid-3x3"></i></span>SharePoint</span></div>
+      </div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Installation simple</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Hébergement managé inclus</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Pas d'obligation Microsoft 365</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Forfait fixe, sans licence par utilisateur</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Tarification transparente, sans coûts cachés</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Plus l'équipe grandit, plus c'est économique</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">API REST ouverte (Swagger)</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Déploiement On-Premise</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Interface moderne & légère</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Édition de documents OnlyOffice</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+      <div class="sp-compare-row"><div class="sp-compare-cell">Déploiement en quelques minutes</div><div class="sp-compare-cell us-cell"><span class="sp-check"><i class="bi bi-check"></i></span></div><div class="sp-compare-cell them-cell"><span class="sp-cross"><i class="bi bi-x"></i></span></div></div>
+    </div>
+    <p class="sp-compare-note sp-reveal">SharePoint reste une solution robuste de l'écosystème Microsoft, mais nécessite souvent Microsoft 365, Azure, des licences supplémentaires par utilisateur, une configuration complexe et des dépendances Microsoft fortes. SyncPoint propose une approche indépendante, légère et transparente, complémentaire de vos outils existants.</p>
+  </div>
+</section>
+
+<!-- AVANTAGES -->
+<section class="sp-section" id="avantages">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-award"></i> Avantages</span>
+      <h2 class="sp-section-title">Les avantages qui font la différence</h2>
+      <p class="sp-section-subtitle">Conçue pour les PME comme pour les grandes entreprises, la plateforme allie performance, sécurité et liberté.</p>
+    </div>
+    <div class="sp-benefits-grid">
+      <div class="sp-benefit sp-reveal"><div class="sp-benefit-icon blue"><i class="bi bi-cloud-check"></i></div><h3>Hébergement managé</h3><p>Nous hébergeons et gérons tout pour vous : infrastructure, sauvegardes, mises à jour. Vous vous concentrez sur vos documents, pas sur la technique.</p></div>
+      <div class="sp-benefit sp-reveal sp-reveal-d1"><div class="sp-benefit-icon cyan"><i class="bi bi-building"></i></div><h3>On-premise pour grands comptes</h3><p>Besoin de souveraineté ? Nous déployons SyncPoint sur votre infrastructure avec formation et support. Vos données restent chez vous.</p></div>
+      <div class="sp-benefit sp-reveal sp-reveal-d2"><div class="sp-benefit-icon green"><i class="bi bi-wallet"></i></div><h3>Sans coûts cachés</h3><p>20€/mois pour démarrer, 200€/mois pour l'illimité, 8 000€ pour l'on-premise. Pas de licence par utilisateur, pas de surprise annuelle.</p></div>
+      <div class="sp-benefit sp-reveal"><div class="sp-benefit-icon violet"><i class="bi bi-code-slash"></i></div><h3>API REST ouverte</h3><p>Intégrez votre SI via l'API REST sécurisée par JWT. Documentation Swagger interactive disponible à <code>/api/doc</code>.</p></div>
+      <div class="sp-benefit sp-reveal sp-reveal-d1"><div class="sp-benefit-icon red"><i class="bi bi-shield-lock"></i></div><h3>Permissions NTFS</h3><p>Lecture, écriture, upload, suppression, renommage, création de dossier, partage, téléchargement, administration. Héritage et refus explicites.</p></div>
+      <div class="sp-benefit sp-reveal sp-reveal-d2"><div class="sp-benefit-icon amber"><i class="bi bi-gauge"></i></div><h3>Performances</h3><p>Application légère, temps de réponse rapides, notifications in-app. Optimisée pour les PME comme les grands comptes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS — 3 offres (Starter / Pro / Enterprise) + comparatif SharePoint -->
+<section class="sp-section sp-section-alt" id="editions">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-layers"></i> Tarifs</span>
+      <h2 class="sp-section-title">Des prix simples. Sans surprises.</h2>
+      <p class="sp-section-subtitle">Le logiciel est le même partout. Pas de licence par utilisateur, pas de coût caché. Plus votre équipe grandit, plus vous économisez.</p>
+    </div>
+
+    <div class="sp-editions">
+      <!-- STARTER — hébergé par nous, 20€/mois -->
+      <div class="sp-edition sp-edition-free sp-reveal">
+        <span class="sp-edition-badge sp-edition-badge-free">Starter</span>
+        <h3 class="sp-edition-name">Starter</h3>
+        <p class="sp-edition-tagline">Pour démarrer, hébergé par nos soins.</p>
+        <div class="sp-edition-price">
+          <span class="sp-edition-price-amount">20&nbsp;€</span>
+          <span class="sp-edition-price-suffix">/ mois</span>
+        </div>
+        <p class="sp-edition-price-note">Le logiciel est gratuit. Vous payez juste l'hébergement. Sans engagement.</p>
+        <ul class="sp-edition-features">
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Toutes les fonctionnalités incluses</strong></li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Gestion documentaire & groupes</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Permissions NTFS avec héritage</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Édition OnlyOffice (Word, Excel, PPT)</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Recherche, partage, corbeille, favoris</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>API REST + JWT (Swagger)</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Hébergement & sauvegardes inclus</li>
+        </ul>
+        <p class="sp-edition-limit"><strong>Quotas Starter :</strong> 5 dossiers · 10 fichiers par dossier · 5 groupes</p>
+        <a class="sp-btn sp-btn-outline" href="#" data-plan="starter"><i class="bi bi-rocket-takeoff"></i>Commencer en Starter</a>
+      </div>
+
+      <!-- PRO — hébergé par nous, 200€/mois, illimité -->
+      <div class="sp-edition sp-edition-pro sp-edition-featured sp-reveal sp-reveal-d1">
+        <span class="sp-edition-badge sp-edition-badge-pro">Pro · Le plus choisi</span>
+        <h3 class="sp-edition-name">Pro</h3>
+        <p class="sp-edition-tagline">Pour la production, quotas illimités.</p>
+        <div class="sp-edition-price">
+          <span class="sp-edition-price-amount">200&nbsp;€</span>
+          <span class="sp-edition-price-suffix">/ mois</span>
+        </div>
+        <p class="sp-edition-price-note">Hébergement, sauvegardes et mises à jour inclus. Sans engagement.</p>
+        <ul class="sp-edition-features">
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Exactement les mêmes fonctionnalités que Starter</strong></li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Dossiers illimités</strong> (vs 5 en Starter)</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Fichiers illimités par dossier</strong> (vs 10 en Starter)</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Groupes illimités</strong> (vs 5 en Starter)</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Sauvegardes automatiques quotidiennes</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Mises à jour gérées par nos soins</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Support prioritaire</li>
+        </ul>
+        <p class="sp-edition-limit"><strong>Aucune limite d'usage.</strong> Idéal pour la production et les grandes équipes.</p>
+        <a class="sp-btn sp-btn-primary" href="#" data-plan="pro"><i class="bi bi-key"></i>Passer en Pro</a>
+      </div>
+
+      <!-- ENTERPRISE — on-premise, 8000€ -->
+      <div class="sp-edition sp-edition-enterprise sp-reveal sp-reveal-d2">
+        <span class="sp-edition-badge sp-edition-badge-enterprise">Enterprise · Grands comptes</span>
+        <h3 class="sp-edition-name">Enterprise</h3>
+        <p class="sp-edition-tagline">On-premise, sur votre infrastructure.</p>
+        <div class="sp-edition-price">
+          <span class="sp-edition-price-amount">8 000&nbsp;€</span>
+          <span class="sp-edition-price-suffix">/ projet</span>
+        </div>
+        <p class="sp-edition-price-note">Déploiement sur votre infrastructure. Souveraineté totale. Paiement unique.</p>
+        <ul class="sp-edition-features">
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Tout ce qui est dans Pro</strong></li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span><strong>Déploiement on-premise assisté</strong></li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Quotas illimités (plan Pro)</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Formation de vos équipes</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Support dédié</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Personnalisation</li>
+          <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Vos données restent chez vous</li>
+        </ul>
+        <p class="sp-edition-limit"><strong>Souveraineté & conformibilité.</strong> Pour les organisations exigeantes.</p>
+        <a class="sp-btn sp-btn-outline" href="#" data-plan="enterprise"><i class="bi bi-envelope"></i>Demander un devis</a>
+      </div>
+    </div>
+
+    <!-- Argument clé : pas de licence par utilisateur -->
+    <div class="sp-no-per-user sp-reveal sp-reveal-d1">
+      <div class="sp-no-per-user-icon"><i class="bi bi-people"></i></div>
+      <div class="sp-no-per-user-text">
+        <h3>Aucune licence par utilisateur. Jamais.</h3>
+        <p>SharePoint vous facture <strong>5€ à 12,50€ par utilisateur et par mois</strong>. Chez SyncPoint, le prix est <strong>forfaitaire</strong>, quelle que soit la taille de votre équipe. 10 utilisateurs ou 1 000, vous payez le même prix.</p>
+      </div>
+    </div>
+
+    <!-- Comparatif tarifaire vs SharePoint — tableau par taille d'équipe -->
+    <div class="sp-price-compare sp-reveal sp-reveal-d2">
+      <div class="sp-price-compare-head">
+        <i class="bi bi-calculator"></i>
+        <h3>Combien économisez-vous selon votre taille d'équipe ?</h3>
+        <p>SharePoint facture par utilisateur. SyncPoint facture à l'instance. Plus l'équipe grandit, plus l'écart se creuse.</p>
+      </div>
+
+      <!-- Tableau d'économie par taille d'équipe -->
+      <div class="sp-savings-table-wrap">
+        <table class="sp-savings-table">
+          <thead>
+            <tr>
+              <th>Taille de l'équipe</th>
+              <th>SharePoint Plan 2<br><small>10€/utilisateur/mois</small></th>
+              <th>SyncPoint Pro<br><small>forfait fixe</small></th>
+              <th>Économie mensuelle</th>
+              <th>Économie annuelle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>10 utilisateurs</strong></td>
+              <td>100&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-us">200&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-neutral">—</td>
+              <td class="sp-savings-neutral">—</td>
+            </tr>
+            <tr>
+              <td><strong>25 utilisateurs</strong></td>
+              <td>250&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-us">200&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win">-50&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win">-600&nbsp;€<small>/an</small></td>
+            </tr>
+            <tr class="sp-savings-highlight">
+              <td><strong>50 utilisateurs</strong></td>
+              <td>500&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-us">200&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win">-300&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win"><strong>-3 600&nbsp;€</strong><small>/an</small></td>
+            </tr>
+            <tr>
+              <td><strong>100 utilisateurs</strong></td>
+              <td>1 000&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-us">200&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win">-800&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win"><strong>-9 600&nbsp;€</strong><small>/an</small></td>
+            </tr>
+            <tr>
+              <td><strong>200 utilisateurs</strong></td>
+              <td>2 000&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-us">200&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win">-1 800&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win"><strong>-21 600&nbsp;€</strong><small>/an</small></td>
+            </tr>
+            <tr>
+              <td><strong>500 utilisateurs</strong></td>
+              <td>5 000&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-us">200&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win">-4 800&nbsp;€<small>/mois</small></td>
+              <td class="sp-savings-win"><strong>-57 600&nbsp;€</strong><small>/an</small></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="sp-price-compare-note">
+        <i class="bi bi-graph-down-arrow"></i>
+        À partir de <strong>25 utilisateurs</strong>, SyncPoint Pro devient moins cher que SharePoint. À <strong>100 utilisateurs</strong>, vous économisez <strong>9 600€/an</strong>. À <strong>500 utilisateurs</strong>, c'est <strong>57 600€/an</strong> d'économie. Et le prix SyncPoint reste le même, peu importe le nombre d'utilisateurs.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DÉPLOIEMENT — stack Docker réelle -->
+<section class="sp-section" id="deploiement">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-cloud"></i> Déploiement</span>
+      <h2 class="sp-section-title">Hébergé par nos soins, ou on-premise</h2>
+      <p class="sp-section-subtitle">Deux modes : nous hébergeons et gérons tout pour vous (Starter & Pro), ou nous déployons sur votre infrastructure (Enterprise). Vous choisissez selon vos besoins de souveraineté.</p>
+    </div>
+    <div class="sp-deploy-visual sp-reveal">
+      <div class="sp-deploy-core"><i class="bi bi-folder2-open"></i></div>
+      <div class="sp-deploy-envs">
+        <span class="sp-deploy-env">Linux</span>
+        <span class="sp-deploy-env">Docker</span>
+      </div>
+    </div>
+    <p class="sp-deploy-text sp-reveal">Plans <strong>Starter</strong> et <strong>Pro</strong> : nous hébergeons votre instance sur notre infrastructure. Sauvegardes et mises à jour inclus. Plan <strong>Enterprise</strong> : nous déployons SyncPoint sur votre infrastructure (on-premise) avec formation et support. Vos données restent chez vous.</p>
+  </div>
+</section>
+
+<!-- CONFIANCE — bandeau de réassurance -->
+<section class="sp-section sp-section-alt" id="confiance">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-shield-check"></i> Confiance</span>
+      <h2 class="sp-section-title">Pourquoi nous faire confiance ?</h2>
+      <p class="sp-section-subtitle">Des engagements concrets, pas des promesses en l'air.</p>
+    </div>
+    <div class="sp-trust-grid">
+      <div class="sp-trust-item sp-reveal">
+        <div class="sp-trust-icon"><i class="bi bi-lock-fill"></i></div>
+        <h3>Vos données sont protégées</h3>
+        <p>Permissions NTFS granulaires, audit complet des actions, sauvegardes quotidiennes. Chaque accès est tracé et contrôlable.</p>
+      </div>
+      <div class="sp-trust-item sp-reveal sp-reveal-d1">
+        <div class="sp-trust-icon"><i class="bi bi-cash-coin"></i></div>
+        <h3>Prix transparent, sans surprise</h3>
+        <p>Forfait fixe dès 20€/mois. Aucune licence par utilisateur, aucun coût caché. Vous savez exactement ce que vous payez.</p>
+      </div>
+      <div class="sp-trust-item sp-reveal sp-reveal-d2">
+        <div class="sp-trust-icon"><i class="bi bi-arrow-counterclockwise"></i></div>
+        <h3>Sans engagement</h3>
+        <p>Les plans Starter et Pro sont sans engagement. Vous arrêtez quand vous voulez, vos données sont exportables à tout moment.</p>
+      </div>
+      <div class="sp-trust-item sp-reveal sp-reveal-d3">
+        <div class="sp-trust-icon"><i class="bi bi-headset"></i></div>
+        <h3>Support réactif</h3>
+        <p>Une question, un problème ? Notre support répond rapidement. Plan Pro : support prioritaire. Enterprise : support dédié.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ — questions alignées sur l'app réelle -->
+<section class="sp-section" id="faq">
+  <div class="sp-container">
+    <div class="sp-section-head sp-reveal">
+      <span class="sp-section-eyebrow"><i class="bi bi-question-circle"></i> FAQ</span>
+      <h2 class="sp-section-title">Questions fréquentes</h2>
+      <p class="sp-section-subtitle">Tout ce qu'il faut savoir avant de déployer SyncPoint.</p>
+    </div>
+    <div class="sp-faq sp-reveal">
+      <details class="sp-faq-item"><summary>Proposez-vous un hébergement managé ?</summary><div class="sp-faq-answer">Oui. Les plans <strong>Starter</strong> (20€/mois) et <strong>Pro</strong> (200€/mois) sont entièrement hébergés et gérés par nos soins : infrastructure, sauvegardes, mises à jour. Vous n'avez rien à gérer, vous vous concentrez sur vos documents. Sans engagement.</div></details>
+      <details class="sp-faq-item"><summary>Et pour les grands comptes en on-premise ?</summary><div class="sp-faq-answer">Pour les organisations avec exigences de souveraineté ou de volumes élevés, nous proposons l'offre <strong>Enterprise</strong> à 8 000€ : déploiement assisté sur votre infrastructure (on-premise), formation de vos équipes et support dédié. Plan Pro inclus (quotas illimités). Vos données restent chez vous.</div></details>
+      <details class="sp-faq-item"><summary>Puis-je héberger SyncPoint moi-même ?</summary><div class="sp-faq-answer">L'hébergement self-hosted par le client n'est pas proposé en standard. Nous préférons héberger et gérer l'infrastructure pour vous garantir un service optimal, des sauvegardes fiables et des mises à jour régulières. Si vous avez besoin d'héberger sur votre propre infrastructure, l'offre <strong>Enterprise on-premise</strong> est faite pour cela.</div></details>
+      <details class="sp-faq-item"><summary>Puis-je l'installer sur mon serveur ?</summary><div class="sp-faq-answer">Pour les plans Starter et Pro, l'hébergement est géré par nos soins — vous n'avez rien à installer. Si vous avez besoin de déployer sur votre propre infrastructure (on-premise), l'offre <strong>Enterprise</strong> (8 000€) est faite pour cela : nous déployons SyncPoint sur votre infrastructure avec formation et support. Contactez-nous pour un devis adapté.</div></details>
+      <details class="sp-faq-item"><summary>Quelle infrastructure utilisez-vous ?</summary><div class="sp-faq-answer">Notre stack d'hébergement repose sur des technologies éprouvées et open-source. Sauvegardes quotidiennes incluses sur tous les plans.</div></details>
+      <details class="sp-faq-item"><summary>Existe-t-il une version gratuite ?</summary><div class="sp-faq-answer">Le plan <strong>Starter</strong> est à 20€/mois : le logiciel est gratuit, vous payez juste l'hébergement. Il inclut toutes les fonctionnalités (gestion documentaire, groupes, permissions NTFS, recherche, OnlyOffice, API REST) avec des quotas : 5 dossiers, 10 fichiers par dossier et 5 groupes. Pour des quotas illimités, passez en <strong>Pro</strong> (200€/mois).</div></details>
+      <details class="sp-faq-item"><summary>Faut-il payer une licence par utilisateur ?</summary><div class="sp-faq-answer"><strong>Non, jamais.</strong> Contrairement à SharePoint qui facture 5€ à 12,50€ par utilisateur et par mois, SyncPoint utilise un <strong>forfait fixe</strong> : 20€/mois en Starter, 200€/mois en Pro, quel que soit le nombre d'utilisateurs. 10, 100 ou 500 utilisateurs, le prix ne change pas. C'est notre principal avantage économique : plus votre équipe grandit, plus vous économisez. À 100 utilisateurs, vous économisez <strong>9 600€/an</strong> vs SharePoint Plan 2. À 500 utilisateurs, c'est <strong>57 600€/an</strong>.</div></details>
+      <details class="sp-faq-item"><summary>Comment fonctionne la licence Pro ?</summary><div class="sp-faq-answer">La licence Pro est une clé cryptographique signée en ECDSA (P-256), au format <code>SYNC-{payload}.{signature}</code>, liée à votre domaine. Elle est perpétuelle (aucun abonnement, aucune expiration) et ne peut être utilisée que sur le domaine déclaré. Elle se génère via la commande <code>php bin/console app:license:generate --domain=votredomaine.com</code> et s'active depuis l'interface utilisateur.</div></details>
+      <details class="sp-faq-item"><summary>Puis-je éditer des documents Office ?</summary><div class="sp-faq-answer">Oui, SyncPoint intègre OnlyOffice Docs Server. Vous pouvez créer et éditer des documents Word, Excel, PowerPoint et fichiers texte directement depuis le navigateur, avec sauvegarde automatique. Le mode édition ou lecture est déterminé par vos permissions sur le dossier parent.</div></details>
+      <details class="sp-faq-item"><summary>Quelles sont les permissions disponibles ?</summary><div class="sp-faq-answer">SyncPoint utilise un modèle de permissions inspiré de NTFS : Lecture, Écriture, Téléchargement, Upload, Suppression, Renommage, Création de dossier, Partage et Administration. Les permissions peuvent être accordées par utilisateur ou par groupe, avec héritage par les sous-dossiers et possibilité de désactiver l'héritage. Les refus explicites sont supportés.</div></details>
+      <details class="sp-faq-item"><summary>Y a-t-il un journal d'audit ?</summary><div class="sp-faq-answer">Oui. SyncPoint conserve un journal d'audit complet de toutes les actions : connexion, déconnexion, création, suppression, modification, téléchargement, upload, changement de permissions, gestion des groupes et utilisateurs. Chaque entrée enregistre la date, l'utilisateur, l'adresse IP et le navigateur. Les administrateurs peuvent filtrer et exporter en CSV.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="sp-cta">
+  <div class="sp-cta-inner sp-reveal">
+    <h2>Reprenez le contrôle de vos documents.</h2>
+    <p>Déployez une solution moderne, rapide et évolutive, sans dépendance aux licences complexes ni aux coûts imprévus.</p>
+    <div class="sp-cta-buttons">
+      <a class="sp-btn sp-btn-primary sp-btn-lg" href="#" data-plan="starter"><i class="bi bi-rocket-takeoff"></i>Commencer dès 20€/mois</a>
+      <a class="sp-btn sp-btn-outline sp-btn-lg" href="#"><i class="bi bi-headset"></i>Contacter un expert</a>
+    </div>
+    <div class="sp-cta-guarantee">
+      <span><i class="bi bi-check-circle-fill"></i> Sans engagement</span>
+      <span><i class="bi bi-check-circle-fill"></i> Sauvegardes incluses</span>
+      <span><i class="bi bi-check-circle-fill"></i> Données exportables</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <div>
+      <div class="sp-footer-brand">
+        <span class="sp-footer-brand-mark"><i class="bi bi-folder2-open"></i></span>
+        <span class="sp-footer-brand-name">SyncPoint</span>
+      </div>
+      <p class="sp-footer-tagline">Vos fichiers, partout avec vous. La plateforme de gestion de fichiers et de collaboration, hébergée par nos soins ou on-premise. Sans licences complexes, sans coûts cachés.</p>
+    </div>
+    <div class="sp-footer-links">
+      <a class="sp-footer-link" href="#avantages"><i class="bi bi-list-ul"></i> Fonctionnalités</a>
+      <a class="sp-footer-link" href="#"><i class="bi bi-book"></i> Documentation</a>
+      <a class="sp-footer-link" href="#deploiement"><i class="bi bi-cloud"></i> Infrastructure</a>
+      <a class="sp-footer-link" href="#confiance"><i class="bi bi-shield-check"></i> Confiance</a>
+      <a class="sp-footer-link" href="#faq"><i class="bi bi-life-preserver"></i> Support</a>
+      <a class="sp-footer-link" href="#"><i class="bi bi-envelope"></i> Contact</a>
+      <a class="sp-footer-link" href="#" rel="nofollow"><i class="bi bi-github"></i> GitHub</a>
+    </div>
+  </div>
+  <div class="sp-footer-bottom">
+    <span>© 2026 SyncPoint. Tous droits réservés.</span>
+    <span>Conçu pour l'indépendance, la simplicité et la transparence.</span>
+  </div>
+</footer>
+
+<!-- MODAL — formulaire d'inscription + paiement Wero -->
+<div class="sp-modal-overlay" id="spModal">
+  <div class="sp-modal">
+    <div class="sp-modal-head">
+      <button class="sp-modal-close" id="spModalClose" aria-label="Fermer"><i class="bi bi-x-lg"></i></button>
+      <span class="sp-modal-badge starter" id="spModalBadge">Starter</span>
+      <h3 id="spModalTitle">Souscrire à SyncPoint Starter</h3>
+      <p class="sp-modal-subtitle" id="spModalSubtitle">Remplissez vos informations, puis effectuez votre paiement via Wero.</p>
+    </div>
+    <div class="sp-modal-body">
+      <!-- Formulaire -->
+      <form id="spModalForm" autocomplete="on">
+        <div class="sp-form-row">
+          <div class="sp-form-group">
+            <label class="sp-form-label" for="spFirstName">Prénom *</label>
+            <input class="sp-form-input" type="text" id="spFirstName" name="firstName" placeholder="Jean" required>
+          </div>
+          <div class="sp-form-group">
+            <label class="sp-form-label" for="spLastName">Nom *</label>
+            <input class="sp-form-input" type="text" id="spLastName" name="lastName" placeholder="Dupont" required>
+          </div>
+        </div>
+        <div class="sp-form-group">
+          <label class="sp-form-label" for="spEmail">Adresse e-mail *</label>
+          <input class="sp-form-input" type="email" id="spEmail" name="email" placeholder="jean.dupont@entreprise.com" required>
+        </div>
+        <div class="sp-form-group">
+          <label class="sp-form-label" for="spCompany">Entreprise / Organisation</label>
+          <input class="sp-form-input" type="text" id="spCompany" name="company" placeholder="Dupont SARL">
+        </div>
+        <div class="sp-form-group" id="spDomainGroup" style="display:none;">
+          <label class="sp-form-label" for="spDomain">Nom de domaine souhaité *</label>
+          <input class="sp-form-input" type="text" id="spDomain" name="domain" placeholder="dupont-sarl.com">
+        </div>
+
+        <!-- Récapitulatif -->
+        <div class="sp-form-summary">
+          <div class="sp-form-summary-row">
+            <span class="sp-form-summary-label">Plan choisi</span>
+            <span class="sp-form-summary-value" id="spSummaryPlan">Starter</span>
+          </div>
+          <div class="sp-form-summary-row">
+            <span class="sp-form-summary-label">Facturation</span>
+            <span class="sp-form-summary-value" id="spSummaryBilling">Mensuelle</span>
+          </div>
+          <div class="sp-form-summary-row">
+            <span class="sp-form-summary-label">Montant</span>
+            <span class="sp-form-summary-value sp-form-summary-total" id="spSummaryAmount">20 € / mois</span>
+          </div>
+        </div>
+
+        <!-- Paiement Wero -->
+        <div class="sp-wero-box">
+          <div class="sp-wero-title"><i class="bi bi-credit-card-2-front"></i> Paiement via Wero</div>
+          <div class="sp-wero-info">
+            <div class="sp-wero-row">
+              <span class="sp-wero-row-label">Bénéficiaire</span>
+              <span class="sp-wero-row-value">SyncPoint SAS</span>
+            </div>
+            <div class="sp-wero-row">
+              <span class="sp-wero-row-label">IBAN (test)</span>
+              <span class="sp-wero-row-value">FR76 3000 1007 9412 3456 7890 143</span>
+            </div>
+            <div class="sp-wero-row">
+              <span class="sp-wero-row-label">Wero ID (test)</span>
+              <span class="sp-wero-row-value">+33 6 00 00 00 00</span>
+            </div>
+            <div class="sp-wero-row">
+              <span class="sp-wero-row-label">Référence</span>
+              <span class="sp-wero-row-value" id="spWeroRef">SP-STARTER-XXXX</span>
+            </div>
+          </div>
+          <p class="sp-wero-note">Effectuez votre paiement via l'app Wero ou votre banque avec la référence indiquée. Votre compte est activé sous 24h après réception du paiement. <strong>IBAN de test — ne pas utiliser en production.</strong></p>
+        </div>
+
+        <button type="submit" class="sp-btn sp-btn-primary sp-form-submit" id="spModalSubmit">
+          <i class="bi bi-check-circle"></i> Valider mon inscription
+        </button>
+        <div class="sp-modal-secure">
+          <i class="bi bi-shield-lock"></i> Vos informations sont confidentielles et jamais partagées.
+        </div>
+      </form>
+
+      <!-- Message de succès -->
+      <div class="sp-form-success" id="spModalSuccess">
+        <div class="sp-form-success-icon"><i class="bi bi-check-lg"></i></div>
+        <h4>Inscription reçue !</h4>
+        <p id="spSuccessMsg">Merci <strong id="spSuccessName"></strong>. Nous avons bien reçu votre demande pour le plan <strong id="spSuccessPlan"></strong>. Effectuez votre paiement via Wero avec la référence fournie, et votre compte sera activé sous 24h. Un e-mail de confirmation vous sera envoyé.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  function initHeaderScroll() {
+    var header = document.getElementById('spHeader');
+    if (!header) return;
+    var onScroll = function () {
+      if (window.scrollY > 8) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  function initReveal() {
+    var PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = document.querySelectorAll('.sp-reveal');
+    if (PRM || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('sp-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('sp-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  function initSmoothScroll() {
+    document.querySelectorAll('.sp-nav-link, .sp-footer-link[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || href.length < 2) return;
+        var target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        var y = target.getBoundingClientRect().top + window.scrollY - 120;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    });
+  }
+
+  function initFaqAccordion() {
+    var items = document.querySelectorAll('.sp-faq-item');
+    items.forEach(function (item) {
+      item.addEventListener('toggle', function () {
+        if (item.open) {
+          items.forEach(function (other) {
+            if (other !== item) other.open = false;
+          });
+        }
+      });
+    });
+  }
+
+  function initAll() {
+    initHeaderScroll();
+    initReveal();
+    initSmoothScroll();
+    initFaqAccordion();
+    initModal();
+    initDemoSlider();
+  }
+
+  /* DÉMO SLIDER — captures réelles */
+  function initDemoSlider() {
+    var slides = document.querySelectorAll('.sp-demo-slide');
+    var thumbs = document.querySelectorAll('.sp-demo-thumb');
+    var prevBtn = document.getElementById('spDemoPrev');
+    var nextBtn = document.getElementById('spDemoNext');
+    if (!slides.length) return;
+    var current = 0;
+    var total = slides.length;
+
+    function show(idx) {
+      if (idx < 0) idx = total - 1;
+      if (idx >= total) idx = 0;
+      current = idx;
+      slides.forEach(function (s, i) { s.classList.toggle('active', i === idx); });
+      thumbs.forEach(function (t, i) { t.classList.toggle('active', i === idx); });
+    }
+
+    prevBtn.addEventListener('click', function () { show(current - 1); });
+    nextBtn.addEventListener('click', function () { show(current + 1); });
+    thumbs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(i); });
+    });
+
+    /* Auto-play : 5s */
+    setInterval(function () { show(current + 1); }, 5000);
+  }
+
+  /* MODAL — formulaire d'inscription + paiement Wero */
+  function initModal() {
+    var overlay = document.getElementById('spModal');
+    var closeBtn = document.getElementById('spModalClose');
+    var form = document.getElementById('spModalForm');
+    var success = document.getElementById('spModalSuccess');
+    if (!overlay) return;
+
+    var plans = {
+      starter: { name: 'Starter', badge: 'starter', title: 'Souscrire à SyncPoint Starter', subtitle: 'Remplissez vos informations, puis effectuez votre paiement via Wero.', billing: 'Mensuelle', amount: '20 € / mois', ref: 'SP-STARTER', showDomain: false },
+      pro: { name: 'Pro', badge: 'pro', title: 'Passer à SyncPoint Pro', subtitle: 'Quotas illimités, support prioritaire. Remplissez vos informations, puis payez via Wero.', billing: 'Mensuelle', amount: '200 € / mois', ref: 'SP-PRO', showDomain: true },
+      enterprise: { name: 'Enterprise', badge: 'enterprise', title: 'Demander un devis Enterprise', subtitle: 'Déploiement on-premise sur votre infrastructure. Décrivez votre projet, nous vous contactons sous 48h.', billing: 'Paiement unique', amount: '8 000 € / projet', ref: 'SP-ENTERPRISE', showDomain: true }
+    };
+
+    function openModal(planKey) {
+      var p = plans[planKey] || plans.starter;
+      var badge = document.getElementById('spModalBadge');
+      badge.textContent = p.name;
+      badge.className = 'sp-modal-badge ' + p.badge;
+      document.getElementById('spModalTitle').textContent = p.title;
+      document.getElementById('spModalSubtitle').textContent = p.subtitle;
+      document.getElementById('spSummaryPlan').textContent = p.name;
+      document.getElementById('spSummaryBilling').textContent = p.billing;
+      document.getElementById('spSummaryAmount').textContent = p.amount;
+      document.getElementById('spWeroRef').textContent = p.ref + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+      document.getElementById('spDomainGroup').style.display = p.showDomain ? 'block' : 'none';
+      form.style.display = 'block';
+      success.classList.remove('show');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* Ouvrir via boutons data-plan */
+    document.querySelectorAll('[data-plan]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal(btn.getAttribute('data-plan'));
+      });
+    });
+
+    /* Fermer */
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
+    /* Submit — simule l'envoi */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var firstName = document.getElementById('spFirstName').value || '';
+      var planName = document.getElementById('spSummaryPlan').textContent;
+      document.getElementById('spSuccessName').textContent = firstName;
+      document.getElementById('spSuccessPlan').textContent = planName;
+      form.style.display = 'none';
+      success.classList.add('show');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+})();
+</script>
+
+</body>
+</html>
