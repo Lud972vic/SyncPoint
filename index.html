@@ -232,9 +232,16 @@ img{max-width:100%;display:block}
 .sp-price-compare-total{padding-top:14px;margin-top:8px;border-top:2px solid rgba(32,43,120,.1);border-bottom:none}
 .sp-price-compare-total strong{font-size:1.25rem;color:var(--blue-500)}
 .sp-price-compare-us .sp-price-compare-total strong{color:var(--blue-500)}
-.sp-price-compare-note{padding:20px 32px;background:rgba(32,43,120,.04);border-top:1px solid rgba(32,43,120,.06);font-size:.875rem;color:var(--text-secondary);line-height:1.6;margin:0;display:flex;align-items:flex-start;gap:10px}
-.sp-price-compare-note i{color:var(--cyan-500);font-size:1.1rem;flex-shrink:0;margin-top:1px}
-.sp-price-compare-note strong{color:var(--text-primary)}
+.sp-price-compare-note{padding:24px 32px;background:rgba(32,43,120,.04);border-top:1px solid rgba(32,43,120,.06);font-size:.875rem;color:var(--text-secondary);line-height:1.6;margin:0}
+.sp-price-compare-note-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:.875rem;color:var(--text-secondary)}
+.sp-price-compare-note-head i{color:var(--cyan-500);font-size:1.1rem;flex-shrink:0}
+.sp-price-compare-note-head strong{color:var(--text-primary)}
+.sp-price-compare-stats{display:flex;flex-wrap:wrap;gap:12px}
+.sp-price-stat{flex:1;min-width:180px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 12px;border-radius:var(--r-lg);background:#fff;border:1px solid rgba(32,43,120,.08);text-align:center}
+.sp-price-stat-num{font-size:1.5rem;font-weight:800;color:var(--blue-500);letter-spacing:-.02em}
+.sp-price-stat-num.green{color:var(--color-success)}
+.sp-price-stat-label{font-size:.75rem;color:var(--text-tertiary);font-weight:500}
+.sp-price-stat-sep{font-size:.7rem;color:var(--text-tertiary);text-align:center;padding-top:6px;font-style:italic}
 
 /* Encart "pas de licence par utilisateur" */
 .sp-no-per-user{max-width:880px;margin:32px auto 0;display:flex;align-items:center;gap:20px;padding:24px 28px;background:linear-gradient(135deg,#202b78 0%,#161d58 100%);border-radius:var(--r-xl);box-shadow:var(--shadow-blue);color:#fff;position:relative;overflow:hidden}
@@ -625,6 +632,12 @@ body[data-billing="saas"] .sp-price-saas{display:block}
       <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-translate"></i></span><span class="sp-why-text">Bilingue Français / Anglais</span></div>
       <div class="sp-why-item sp-reveal sp-reveal-d2"><span class="sp-why-icon"><i class="bi bi-unlock"></i></span><span class="sp-why-text">Pas de dépendance Microsoft</span></div>
       <div class="sp-why-item sp-reveal sp-reveal-d3"><span class="sp-why-icon"><i class="bi bi-cloud-check"></i></span><span class="sp-why-text">Hébergement & sauvegardes inclus</span></div>
+      <div class="sp-why-item sp-reveal"><span class="sp-why-icon"><i class="bi bi-shield-virus"></i></span><span class="sp-why-text">Antivirus ClamAV intégré</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-tools"></i></span><span class="sp-why-text">Mode maintenance admin</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d2"><span class="sp-why-icon"><i class="bi bi-file-earmark-spreadsheet"></i></span><span class="sp-why-text">Import CSV d'utilisateurs</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d3"><span class="sp-why-icon"><i class="bi bi-bell-fill"></i></span><span class="sp-why-text">Push notifications navigateur</span></div>
+      <div class="sp-why-item sp-reveal"><span class="sp-why-icon"><i class="bi bi-person-gear"></i></span><span class="sp-why-text">Délégation de gestion par groupe</span></div>
+      <div class="sp-why-item sp-reveal sp-reveal-d1"><span class="sp-why-icon"><i class="bi bi-gear"></i></span><span class="sp-why-text">Panneau de réglages système</span></div>
     </div>
   </div>
 </section>
@@ -816,6 +829,7 @@ body[data-billing="saas"] .sp-price-saas{display:block}
       <div class="sp-benefit sp-reveal"><div class="sp-benefit-icon violet"><i class="bi bi-code-slash"></i></div><h3>API REST ouverte</h3><p>Intégrez votre SI via l'API REST sécurisée par JWT. Documentation Swagger interactive disponible à <code>/api/doc</code>.</p></div>
       <div class="sp-benefit sp-reveal sp-reveal-d1"><div class="sp-benefit-icon red"><i class="bi bi-shield-lock"></i></div><h3>Permissions NTFS</h3><p>Lecture, écriture, upload, suppression, renommage, création de dossier, partage, téléchargement, administration. Héritage et refus explicites.</p></div>
       <div class="sp-benefit sp-reveal sp-reveal-d2"><div class="sp-benefit-icon amber"><i class="bi bi-gauge"></i></div><h3>Performances</h3><p>Application légère, temps de réponse rapides, notifications in-app. Optimisée pour les PME comme les grands comptes.</p></div>
+      <div class="sp-benefit sp-reveal"><div class="sp-benefit-icon red"><i class="bi bi-shield-virus"></i></div><h3>Sécurité renforcée</h3><p>Antivirus ClamAV sur chaque upload, Content Security Policy avec nonce par requête, journal d'audit complet et mode maintenance pour les opérations sensibles.</p></div>
     </div>
   </div>
 </section>
@@ -849,7 +863,7 @@ body[data-billing="saas"] .sp-price-saas{display:block}
           <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>API REST + JWT (Swagger)</li>
           <li class="sp-edition-feature"><span class="sp-edition-feature-check"><i class="bi bi-check"></i></span>Hébergement & sauvegardes inclus</li>
         </ul>
-        <p class="sp-edition-limit"><strong>Quotas Starter :</strong> 5 dossiers · 10 fichiers par dossier · 5 groupes</p>
+        <p class="sp-edition-limit"><strong>Quotas Starter :</strong> 10 dossiers · 100 fichiers · 5 groupes</p>
         <a class="sp-btn sp-btn-outline" href="#" data-plan="starter"><i class="bi bi-rocket-takeoff"></i>Commencer en Starter</a>
       </div>
 
@@ -976,10 +990,26 @@ body[data-billing="saas"] .sp-price-saas{display:block}
         </table>
       </div>
 
-      <p class="sp-price-compare-note">
-        <i class="bi bi-graph-down-arrow"></i>
-        À partir de <strong>25 utilisateurs</strong>, SyncPoint Pro devient moins cher que SharePoint. À <strong>100 utilisateurs</strong>, vous économisez <strong>9 600€/an</strong>. À <strong>500 utilisateurs</strong>, c'est <strong>57 600€/an</strong> d'économie. Et le prix SyncPoint reste le même, peu importe le nombre d'utilisateurs.
-      </p>
+      <div class="sp-price-compare-note">
+        <div class="sp-price-compare-note-head">
+          <i class="bi bi-graph-down-arrow"></i>
+          <span>À partir de <strong>25 utilisateurs</strong>, SyncPoint Pro devient moins cher que SharePoint. Le prix SyncPoint reste le même, peu importe le nombre d'utilisateurs.</span>
+        </div>
+        <div class="sp-price-compare-stats">
+          <div class="sp-price-stat">
+            <div class="sp-price-stat-num">25</div>
+            <div class="sp-price-stat-label">utilisateurs — seuil de rentabilité</div>
+          </div>
+          <div class="sp-price-stat">
+            <div class="sp-price-stat-num green">9 600€</div>
+            <div class="sp-price-stat-label">économisés / an à 100 utilisateurs</div>
+          </div>
+          <div class="sp-price-stat">
+            <div class="sp-price-stat-num green">57 600€</div>
+            <div class="sp-price-stat-label">économisés / an à 500 utilisateurs</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1032,6 +1062,16 @@ body[data-billing="saas"] .sp-price-saas{display:block}
         <h3>Support réactif</h3>
         <p>Une question, un problème ? Notre support répond rapidement. Plan Pro : support prioritaire. Enterprise : support dédié.</p>
       </div>
+      <div class="sp-trust-item sp-reveal">
+        <div class="sp-trust-icon"><i class="bi bi-shield-virus"></i></div>
+        <h3>Antivirus intégré</h3>
+        <p>Chaque fichier uploadé est automatiquement scanné par ClamAV. Les fichiers infectés sont bloqués à la source, avant d'atteindre vos dossiers.</p>
+      </div>
+      <div class="sp-trust-item sp-reveal sp-reveal-d1">
+        <div class="sp-trust-icon"><i class="bi bi-shield-lock"></i></div>
+        <h3>Sécurité CSP renforcée</h3>
+        <p>Content Security Policy avec nonce cryptographique unique par requête. Protection contre le XSS, les injections et les attaques par script tiers.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1050,12 +1090,20 @@ body[data-billing="saas"] .sp-price-saas{display:block}
       <details class="sp-faq-item"><summary>Puis-je héberger SyncPoint moi-même ?</summary><div class="sp-faq-answer">L'hébergement self-hosted par le client n'est pas proposé en standard. Nous préférons héberger et gérer l'infrastructure pour vous garantir un service optimal, des sauvegardes fiables et des mises à jour régulières. Si vous avez besoin d'héberger sur votre propre infrastructure, l'offre <strong>Enterprise on-premise</strong> est faite pour cela.</div></details>
       <details class="sp-faq-item"><summary>Puis-je l'installer sur mon serveur ?</summary><div class="sp-faq-answer">Pour les plans Starter et Pro, l'hébergement est géré par nos soins — vous n'avez rien à installer. Si vous avez besoin de déployer sur votre propre infrastructure (on-premise), l'offre <strong>Enterprise</strong> (8 000€) est faite pour cela : nous déployons SyncPoint sur votre infrastructure avec formation et support. Contactez-nous pour un devis adapté.</div></details>
       <details class="sp-faq-item"><summary>Quelle infrastructure utilisez-vous ?</summary><div class="sp-faq-answer">Notre stack d'hébergement repose sur des technologies éprouvées et open-source. Sauvegardes quotidiennes incluses sur tous les plans.</div></details>
-      <details class="sp-faq-item"><summary>Existe-t-il une version gratuite ?</summary><div class="sp-faq-answer">Le plan <strong>Starter</strong> est à 20€/mois : le logiciel est gratuit, vous payez juste l'hébergement. Il inclut toutes les fonctionnalités (gestion documentaire, groupes, permissions NTFS, recherche, OnlyOffice, API REST) avec des quotas : 5 dossiers, 10 fichiers par dossier et 5 groupes. Pour des quotas illimités, passez en <strong>Pro</strong> (200€/mois).</div></details>
+      <details class="sp-faq-item"><summary>Existe-t-il une version gratuite ?</summary><div class="sp-faq-answer">Le plan <strong>Starter</strong> est à 20€/mois : le logiciel est gratuit, vous payez juste l'hébergement. Il inclut toutes les fonctionnalités (gestion documentaire, groupes, permissions NTFS, recherche, OnlyOffice, API REST) avec des quotas : 10 dossiers, 100 fichiers et 5 groupes. Pour des quotas illimités, passez en <strong>Pro</strong> (200€/mois).</div></details>
       <details class="sp-faq-item"><summary>Faut-il payer une licence par utilisateur ?</summary><div class="sp-faq-answer"><strong>Non, jamais.</strong> Contrairement à SharePoint qui facture 5€ à 12,50€ par utilisateur et par mois, SyncPoint utilise un <strong>forfait fixe</strong> : 20€/mois en Starter, 200€/mois en Pro, quel que soit le nombre d'utilisateurs. 10, 100 ou 500 utilisateurs, le prix ne change pas. C'est notre principal avantage économique : plus votre équipe grandit, plus vous économisez. À 100 utilisateurs, vous économisez <strong>9 600€/an</strong> vs SharePoint Plan 2. À 500 utilisateurs, c'est <strong>57 600€/an</strong>.</div></details>
       <details class="sp-faq-item"><summary>Comment fonctionne la licence Pro ?</summary><div class="sp-faq-answer">La licence Pro est une clé cryptographique signée en ECDSA (P-256), au format <code>SYNC-{payload}.{signature}</code>, liée à votre domaine. Elle est perpétuelle (aucun abonnement, aucune expiration) et ne peut être utilisée que sur le domaine déclaré. Elle se génère via la commande <code>php bin/console app:license:generate --domain=votredomaine.com</code> et s'active depuis l'interface utilisateur.</div></details>
       <details class="sp-faq-item"><summary>Puis-je éditer des documents Office ?</summary><div class="sp-faq-answer">Oui, SyncPoint intègre OnlyOffice Docs Server. Vous pouvez créer et éditer des documents Word, Excel, PowerPoint et fichiers texte directement depuis le navigateur, avec sauvegarde automatique. Le mode édition ou lecture est déterminé par vos permissions sur le dossier parent.</div></details>
       <details class="sp-faq-item"><summary>Quelles sont les permissions disponibles ?</summary><div class="sp-faq-answer">SyncPoint utilise un modèle de permissions inspiré de NTFS : Lecture, Écriture, Téléchargement, Upload, Suppression, Renommage, Création de dossier, Partage et Administration. Les permissions peuvent être accordées par utilisateur ou par groupe, avec héritage par les sous-dossiers et possibilité de désactiver l'héritage. Les refus explicites sont supportés.</div></details>
       <details class="sp-faq-item"><summary>Y a-t-il un journal d'audit ?</summary><div class="sp-faq-answer">Oui. SyncPoint conserve un journal d'audit complet de toutes les actions : connexion, déconnexion, création, suppression, modification, téléchargement, upload, changement de permissions, gestion des groupes et utilisateurs. Chaque entrée enregistre la date, l'utilisateur, l'adresse IP et le navigateur. Les administrateurs peuvent filtrer et exporter en CSV.</div></details>
+      <details class="sp-faq-item"><summary>Les fichiers uploadés sont-ils scannés par un antivirus ?</summary><div class="sp-faq-answer">Oui. SyncPoint intègre <strong>ClamAV</strong> : chaque fichier uploadé est automatiquement scanné en temps réel. Les fichiers infectés sont bloqués à la source et n'atteignent jamais vos dossiers. Les signatures virales sont mises à jour automatiquement toutes les 2 heures.</div></details>
+      <details class="sp-faq-item"><summary>Puis-je automatiser des tâches via des clés API ?</summary><div class="sp-faq-answer">Oui. Chaque utilisateur peut générer des <strong>clés API</strong> depuis son profil. Ces clés héritent de vos permissions et permettent à des scripts ou services externes de s'authentifier auprès de SyncPoint via l'API REST, sans utiliser vos identifiants personnels. Les clés sont révocables à tout moment et ne sont affichées qu'une seule fois à la création.</div></details>
+      <details class="sp-faq-item"><summary>Comment fonctionnent les sauvegardes et la restauration ?</summary><div class="sp-faq-answer">Les administrateurs peuvent créer des <strong>sauvegardes complètes</strong> (base de données + fichiers) au format ZIP depuis l'interface d'administration. La restauration se fait en un clic. En plan Pro, les sauvegardes quotidiennes sont automatiques. En Enterprise, elles sont planifiées selon vos besoins.</div></details>
+      <details class="sp-faq-item"><summary>Qu'est-ce que le mode maintenance ?</summary><div class="sp-faq-answer">Le <strong>mode maintenance</strong> permet aux administrateurs de verrouiller l'accès à l'application pour les utilisateurs non-admin pendant une mise à jour ou une opération sensible. Une page d'attente avec un message personnalisable s'affiche. Les administrateurs conservent un accès complet pour effectuer les opérations nécessaires.</div></details>
+      <details class="sp-faq-item"><summary>Puis-je importer des utilisateurs en masse ?</summary><div class="sp-faq-answer">Oui. Les administrateurs peuvent <strong>importer des utilisateurs via un fichier CSV</strong> : téléchargez le modèle, remplissez-le (email, prénom, nom, mot de passe), puis importez-le. Un rapport détaillé indique les utilisateurs créés et les éventuelles erreurs (doublons, emails invalides). Idéal pour onboarder une promotion entière en une seule opération.</div></details>
+      <details class="sp-faq-item"><summary>Les notifications sont-elles disponibles hors de l'application ?</summary><div class="sp-faq-answer">Oui. En plus des <strong>notifications in-app</strong> (cloche dans la barre de navigation), SyncPoint supporte les <strong>push notifications navigateur</strong> (Web Push API). Vous recevez des alertes en temps réel sur votre bureau ou votre mobile, même si l'onglet SyncPoint n'est pas ouvert. L'abonnement est volontaire et révocable à tout moment depuis votre profil.</div></details>
+      <details class="sp-faq-item"><summary>Puis-je déléguer la gestion d'un groupe sans être administrateur ?</summary><div class="sp-faq-answer">Oui. SyncPoint distingue <strong>membres</strong> et <strong>gestionnaires</strong> d'un groupe. Les membres appartiennent au groupe et héritent des permissions sur les dossiers. Les gestionnaires peuvent ajouter ou retirer des membres de ce groupe spécifique, sans avoir les droits administrateur sur toute la plateforme. C'est idéal pour déléguer la gestion d'un groupe « RH » ou « Marketing » au responsable d'équipe correspondant.</div></details>
+      <details class="sp-faq-item"><summary>Quels réglages système sont configurables ?</summary><div class="sp-faq-answer">Les administrateurs accèdent à un <strong>panneau de réglages</strong> complet : nom de l'organisation, langue par défaut, limites d'upload, délai d'expiration des sessions, activation du mode maintenance, et autres paramètres système. Ces réglages permettent d'adapter SyncPoint aux politiques de sécurité et aux besoins spécifiques de votre organisation.</div></details>
     </div>
   </div>
 </section>
